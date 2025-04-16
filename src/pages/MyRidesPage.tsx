@@ -5,7 +5,7 @@ import { ArrowLeft, Calendar, Clock, Plus } from 'lucide-react';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Button } from '@/components/ui/button';
 import { Ride } from '@/types';
-import { generateMockRides } from '@/lib/utils';
+import { generateMockRides, formatDate as utilsFormatDate } from '@/lib/utils';
 
 const MyRidesPage = () => {
   const navigate = useNavigate();
@@ -36,6 +36,11 @@ const MyRidesPage = () => {
       try {
         const publishedRide = JSON.parse(publishedRideData);
         
+        // Ensure departureDate is a Date object
+        if (publishedRide.departureDate && !(publishedRide.departureDate instanceof Date)) {
+          publishedRide.departureDate = new Date(publishedRide.departureDate);
+        }
+        
         // Add the published ride to the upcoming rides
         setUpcomingRides([publishedRide, ...upcoming]);
       } catch (error) {
@@ -49,8 +54,11 @@ const MyRidesPage = () => {
     setCompletedRides(completed);
   }, []);
   
-  const formatDate = (date: Date) => {
-    return date.toLocaleDateString('en-IN', {
+  const formatDate = (date: Date | string): string => {
+    // Ensure we're working with a Date object
+    const dateObj = date instanceof Date ? date : new Date(date);
+    
+    return dateObj.toLocaleDateString('en-IN', {
       weekday: 'short',
       month: 'short',
       day: 'numeric'
