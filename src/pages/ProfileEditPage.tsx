@@ -1,3 +1,4 @@
+
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { ArrowLeft, Camera, User } from 'lucide-react';
@@ -11,8 +12,9 @@ import { Avatar } from '@/components/ui/avatar';
 const ProfileEditPage = () => {
   const navigate = useNavigate();
 
-  // Mock user data - in a real app, this would come from authentication context
-  const [user, setUser] = useState<UserType>({
+  // Try to get existing user data from localStorage
+  const storedUser = localStorage.getItem('userProfile');
+  const initialUser = storedUser ? JSON.parse(storedUser) : {
     id: 'user-1',
     firstName: 'Riapreet',
     lastName: 'Kaur',
@@ -23,14 +25,16 @@ const ProfileEditPage = () => {
     rating: 4.9,
     verified: true,
     createdAt: new Date('2021-01-01')
-  });
+  };
+
+  const [user, setUser] = useState<UserType>(initialUser);
 
   const [formData, setFormData] = useState({
-    firstName: user.firstName,
-    lastName: user.lastName,
-    bio: 'I enjoy road trips and meeting new people. Love listening to podcasts while driving.',
-    phone: '+918195889329',
-    location: 'Delhi, India'
+    firstName: user.firstName || '',
+    lastName: user.lastName || '',
+    bio: user.bio || 'I enjoy road trips and meeting new people. Love listening to podcasts while driving.',
+    phone: user.phoneNumber || '+918195889329',
+    location: user.location || 'Delhi, India'
   });
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
@@ -42,27 +46,24 @@ const ProfileEditPage = () => {
   };
 
   const handleSave = () => {
-    // Update user data with all form values
-    setUser({
+    // Create updated user object with all form values
+    const updatedUser = {
       ...user,
       firstName: formData.firstName,
       lastName: formData.lastName,
       phoneNumber: formData.phone,
-    });
+      bio: formData.bio,
+      location: formData.location
+    };
 
-    // In a real app, you would typically make an API call here
-    // to update the user's profile on the server
+    // Update the state
+    setUser(updatedUser);
+    
+    // Store updated information in localStorage for persistence
+    localStorage.setItem('userProfile', JSON.stringify(updatedUser));
     
     // Show success message
     toast.success('Profile updated successfully');
-    
-    // Store updated information in localStorage for persistence across page refreshes
-    localStorage.setItem('userProfile', JSON.stringify({
-      ...user,
-      firstName: formData.firstName,
-      lastName: formData.lastName,
-      phoneNumber: formData.phone,
-    }));
     
     // Navigate back
     navigate('/profile');
@@ -78,13 +79,16 @@ const ProfileEditPage = () => {
     
     const randomAvatar = avatars[Math.floor(Math.random() * avatars.length)];
     
-    setUser({
+    // Update user state
+    const updatedUser = {
       ...user,
       profilePicture: randomAvatar
-    });
+    };
     
-    // Store updated profilePicture in localStorage
-    localStorage.setItem('userProfilePicture', randomAvatar);
+    setUser(updatedUser);
+    
+    // Store the full updated user in localStorage
+    localStorage.setItem('userProfile', JSON.stringify(updatedUser));
     
     toast.success('Profile picture updated successfully');
   };

@@ -1,3 +1,4 @@
+
 import React from 'react';
 import { User } from '@/types';
 import { Star, Shield, MessageCircle, Calendar } from 'lucide-react';
@@ -24,27 +25,37 @@ const ProfileHeader: React.FC<ProfileHeaderProps> = ({
           {user.profilePicture ? (
             <img 
               src={user.profilePicture} 
-              alt="Riapreet"
+              alt={user.firstName || 'User'}
               className="w-full h-full object-cover"
             />
           ) : (
             <div className="h-full w-full flex items-center justify-center text-3xl text-gray-500 bg-gray-200">
-              R
+              {user.firstName?.charAt(0) || 'U'}
             </div>
           )}
         </Avatar>
         
         <div className="text-center">
           <div className="text-2xl font-bold text-secondary">
-            Riapreet Kaur
+            {user.firstName || 'User'} {user.lastName || ''}
           </div>
           
           <div className="flex items-center justify-center mt-1">
             <Star className="h-4 w-4 text-yellow-400 mr-1" fill="currentColor" />
             <span className="mr-3">{user.rating || 4.8}</span>
-            <Shield className="h-4 w-4 text-primary mr-1" />
-            <span>Verified</span>
+            {user.verified && (
+              <>
+                <Shield className="h-4 w-4 text-primary mr-1" />
+                <span>Verified</span>
+              </>
+            )}
           </div>
+          
+          {user.bio && (
+            <div className="text-sm text-gray-500 mt-2 max-w-xs mx-auto">
+              {user.bio}
+            </div>
+          )}
         </div>
         
         {isCurrentUser ? (

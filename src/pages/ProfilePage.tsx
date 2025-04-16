@@ -6,7 +6,7 @@ import { User } from '@/types';
 import { Button } from '@/components/ui/button';
 import SOSButton from '@/components/emergency/SOSButton';
 
-const mockUser: User = {
+const defaultUser: User = {
   id: 'user-1',
   firstName: 'John',
   lastName: 'Doe',
@@ -21,31 +21,19 @@ const mockUser: User = {
 
 const ProfilePage = () => {
   const navigate = useNavigate();
-  const [user, setUser] = useState<User>(mockUser);
+  const [user, setUser] = useState<User>(defaultUser);
 
   useEffect(() => {
-    // Check if there's updated profile data in localStorage
-    const updatedProfile = localStorage.getItem('userProfile');
-    const updatedPicture = localStorage.getItem('userProfilePicture');
+    // Check if there's profile data in localStorage
+    const storedProfile = localStorage.getItem('userProfile');
     
-    if (updatedProfile) {
-      const parsedProfile = JSON.parse(updatedProfile);
-      setUser(prev => ({ ...prev, ...parsedProfile }));
-      
-      // Clear the localStorage after 5 seconds
-      setTimeout(() => {
-        localStorage.removeItem('userProfile');
-        setUser(mockUser);
-      }, 5000);
-    }
-
-    if (updatedPicture) {
-      setUser(prev => ({ ...prev, profilePicture: updatedPicture }));
-      
-      // Clear the picture from localStorage after 5 seconds
-      setTimeout(() => {
-        localStorage.removeItem('userProfilePicture');
-      }, 5000);
+    if (storedProfile) {
+      try {
+        const parsedProfile = JSON.parse(storedProfile);
+        setUser(prev => ({ ...prev, ...parsedProfile }));
+      } catch (error) {
+        console.error('Error parsing stored profile:', error);
+      }
     }
   }, []);
 

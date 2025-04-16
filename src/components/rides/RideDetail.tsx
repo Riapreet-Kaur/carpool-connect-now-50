@@ -59,7 +59,7 @@ const RideDetail: React.FC<RideDetailProps> = ({ ride }) => {
       
       {/* Ride details with scrollable content */}
       <ScrollArea className="flex-1 overflow-y-auto">
-        <div className="p-4 pr-8">
+        <div className="p-4 pr-10 pl-6">
           <div className="flex justify-between items-center mb-6">
             <div>
               <div className="text-secondary-500 text-sm">
