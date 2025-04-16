@@ -1,3 +1,4 @@
+
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Calendar, Clock, MapPin, Users, ArrowLeft, Car, MinusIcon, PlusIcon, DollarSign } from 'lucide-react';
@@ -6,7 +7,6 @@ import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
 import { toast } from 'sonner';
 import { Ride } from '@/types';
-import { indianStates } from '@/data/indianStates';
 import { 
   Select,
   SelectContent,
@@ -14,19 +14,6 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import {
-  Popover,
-  PopoverContent,
-  PopoverTrigger,
-} from "@/components/ui/popover";
-import {
-  Command,
-  CommandInput,
-  CommandEmpty,
-  CommandGroup,
-  CommandItem,
-  CommandList,
-} from "@/components/ui/command";
 
 const initialRide: Ride = {
   id: "new-ride-1",
@@ -50,10 +37,6 @@ const PublishRide = () => {
   const [step, setStep] = useState(1);
   const [isSubmitted, setIsSubmitted] = useState(false);
   const [ride, setRide] = useState<Ride>(initialRide);
-  const [openOrigin, setOpenOrigin] = useState(false);
-  const [openDestination, setOpenDestination] = useState(false);
-  const [searchOrigin, setSearchOrigin] = useState("");
-  const [searchDestination, setSearchDestination] = useState("");
   const [formData, setFormData] = useState({
     origin: '',
     destination: '',
@@ -68,24 +51,20 @@ const PublishRide = () => {
     genderPreference: 'any',
   });
 
-  const filteredOriginLocations = searchOrigin.trim() === "" 
-    ? indianStates 
-    : indianStates.filter((state) => 
-        state.toLowerCase().includes(searchOrigin.toLowerCase())
-      );
-
-  const filteredDestinationLocations = searchDestination.trim() === "" 
-    ? indianStates 
-    : indianStates.filter((state) => 
-        state.toLowerCase().includes(searchDestination.toLowerCase())
-      );
-
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     const { name, value } = e.target;
     setFormData({
       ...formData,
       [name]: value
     });
+    
+    // Update ride state when origin or destination changes
+    if (name === 'origin' || name === 'destination') {
+      setRide({
+        ...ride,
+        [name]: value
+      });
+    }
   };
 
   const handleSelectChange = (name: string, value: string | number) => {
@@ -93,13 +72,6 @@ const PublishRide = () => {
       ...formData,
       [name]: value
     });
-    
-    if (name === 'origin' || name === 'destination') {
-      setRide({
-        ...ride,
-        [name]: value
-      });
-    }
   };
 
   const incrementSeats = () => {
@@ -261,94 +233,34 @@ const PublishRide = () => {
             <h1 className="text-primary-title">Where are you driving?</h1>
             
             <div className="space-y-5">
-              {/* Origin with combobox */}
+              {/* Origin - standard input field */}
               <div className="relative">
-                <div className="absolute left-3 top-3.5 z-10">
+                <div className="absolute left-3 top-3.5">
                   <div className="w-3 h-3 rounded-full bg-primary border-2 border-white"></div>
                 </div>
-                <Popover open={openOrigin} onOpenChange={setOpenOrigin}>
-                  <PopoverTrigger asChild>
-                    <Button
-                      variant="outline"
-                      role="combobox"
-                      aria-expanded={openOrigin}
-                      className="w-full justify-between pl-10 font-normal"
-                    >
-                      {formData.origin ? formData.origin : "Pick-up location"}
-                    </Button>
-                  </PopoverTrigger>
-                  <PopoverContent className="w-full p-0" align="start">
-                    <Command>
-                      <CommandInput 
-                        placeholder="Search location..." 
-                        value={searchOrigin}
-                        onValueChange={setSearchOrigin}
-                      />
-                      <CommandList>
-                        <CommandEmpty>No location found.</CommandEmpty>
-                        <CommandGroup className="max-h-64 overflow-y-auto">
-                          {filteredOriginLocations.map((state) => (
-                            <CommandItem
-                              key={state}
-                              value={state}
-                              onSelect={(currentValue) => {
-                                handleSelectChange('origin', currentValue);
-                                setOpenOrigin(false);
-                              }}
-                            >
-                              {state}
-                            </CommandItem>
-                          ))}
-                        </CommandGroup>
-                      </CommandList>
-                    </Command>
-                  </PopoverContent>
-                </Popover>
+                <Input
+                  className="pl-10"
+                  type="text"
+                  name="origin"
+                  placeholder="Pick-up location"
+                  value={formData.origin}
+                  onChange={handleInputChange}
+                />
               </div>
               
-              {/* Destination with combobox */}
+              {/* Destination - standard input field */}
               <div className="relative">
-                <div className="absolute left-3 top-3.5 z-10">
+                <div className="absolute left-3 top-3.5">
                   <div className="w-3 h-3 rounded-full bg-primary border-2 border-white"></div>
                 </div>
-                <Popover open={openDestination} onOpenChange={setOpenDestination}>
-                  <PopoverTrigger asChild>
-                    <Button
-                      variant="outline"
-                      role="combobox"
-                      aria-expanded={openDestination}
-                      className="w-full justify-between pl-10 font-normal"
-                    >
-                      {formData.destination ? formData.destination : "Drop-off location"}
-                    </Button>
-                  </PopoverTrigger>
-                  <PopoverContent className="w-full p-0" align="start">
-                    <Command>
-                      <CommandInput 
-                        placeholder="Search location..." 
-                        value={searchDestination}
-                        onValueChange={setSearchDestination}
-                      />
-                      <CommandList>
-                        <CommandEmpty>No location found.</CommandEmpty>
-                        <CommandGroup className="max-h-64 overflow-y-auto">
-                          {filteredDestinationLocations.map((state) => (
-                            <CommandItem
-                              key={state}
-                              value={state}
-                              onSelect={(currentValue) => {
-                                handleSelectChange('destination', currentValue);
-                                setOpenDestination(false);
-                              }}
-                            >
-                              {state}
-                            </CommandItem>
-                          ))}
-                        </CommandGroup>
-                      </CommandList>
-                    </Command>
-                  </PopoverContent>
-                </Popover>
+                <Input
+                  className="pl-10"
+                  type="text"
+                  name="destination"
+                  placeholder="Drop-off location"
+                  value={formData.destination}
+                  onChange={handleInputChange}
+                />
               </div>
               
               <p className="text-gray-500 text-sm">
