@@ -33,7 +33,6 @@ const BookingsPage = () => {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    // Simulate API call
     setTimeout(() => {
       const mockBookings: Booking[] = [
         {
@@ -120,7 +119,6 @@ const BookingsPage = () => {
 
   return (
     <div className="min-h-screen bg-gray-50 pb-20">
-      {/* Header */}
       <div className="bg-white p-4 border-b flex items-center">
         <button 
           onClick={() => navigate(-1)}
@@ -131,7 +129,6 @@ const BookingsPage = () => {
         <h1 className="text-xl font-semibold text-secondary ml-4">My Bookings</h1>
       </div>
       
-      {/* Search and filters */}
       <div className="p-4 bg-white">
         <div className="relative">
           <Search className="absolute left-3 top-2.5 h-5 w-5 text-gray-400" />
@@ -172,10 +169,8 @@ const BookingsPage = () => {
         </div>
       </div>
       
-      {/* Bookings list */}
       <div className="space-y-4 mt-4 px-4">
         {loading ? (
-          // Loading skeleton
           [...Array(3)].map((_, i) => (
             <div key={i} className="bg-white p-4 rounded-lg shadow-sm animate-pulse">
               <div className="flex justify-between mb-3">
@@ -224,7 +219,7 @@ const BookingsPage = () => {
                   <span className="text-secondary">{booking.driver.firstName} {booking.driver.lastName}</span>
                 </div>
                 
-                <span className="text-primary font-semibold">${booking.price}</span>
+                <span className="text-primary font-semibold">₹{booking.price}</span>
               </div>
             </div>
           ))
