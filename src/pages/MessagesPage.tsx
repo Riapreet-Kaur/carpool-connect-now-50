@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { ArrowLeft, MessageCircle } from 'lucide-react';
@@ -21,13 +20,12 @@ const MessagesPage = () => {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    // Simulate API call with a slight delay
     const timer = setTimeout(() => {
       const mockChats: ChatPreview[] = [
         {
           id: 'chat-1',
           recipientId: 'user-1',
-          recipientName: 'John Smith',
+          recipientName: 'Rahul Sharma',
           recipientAvatar: '/lovable-uploads/8709c341-a273-4678-8345-65a0ccb7e0ec.png',
           lastMessage: 'See you tomorrow!',
           timestamp: new Date(),
@@ -36,18 +34,18 @@ const MessagesPage = () => {
         {
           id: 'chat-2',
           recipientId: 'user-2',
-          recipientName: 'Sarah Johnson',
+          recipientName: 'Priya Patel',
           lastMessage: 'Is there space for a small suitcase?',
-          timestamp: new Date(Date.now() - 30 * 60 * 1000), // 30 minutes ago
+          timestamp: new Date(Date.now() - 30 * 60 * 1000),
           unread: false
         },
         {
           id: 'chat-3',
           recipientId: 'user-3',
-          recipientName: 'Michael Brown',
+          recipientName: 'Amit Kumar',
           recipientAvatar: '/lovable-uploads/b63d7144-b3e0-4e03-a033-46a27dad4dba.png',
-          lastMessage: "Perfect! I'll be there.", // Fixed: Used double quotes to escape apostrophe
-          timestamp: new Date(Date.now() - 2 * 60 * 60 * 1000), // 2 hours ago
+          lastMessage: "Perfect! I'll be there.",
+          timestamp: new Date(Date.now() - 2 * 60 * 60 * 1000),
           unread: false
         }
       ];
@@ -75,7 +73,6 @@ const MessagesPage = () => {
 
   return (
     <div className="min-h-screen bg-gray-50 pb-20">
-      {/* Header */}
       <div className="bg-white p-4 border-b flex items-center">
         <button 
           onClick={() => navigate(-1)}
@@ -86,10 +83,8 @@ const MessagesPage = () => {
         <h1 className="text-xl font-semibold text-secondary ml-4">Messages</h1>
       </div>
       
-      {/* Chat list */}
       <div className="divide-y divide-gray-100">
         {loading ? (
-          // Loading skeleton
           [...Array(3)].map((_, i) => (
             <div key={i} className="flex p-4 bg-white animate-pulse">
               <div className="w-12 h-12 rounded-full bg-gray-200"></div>
@@ -103,7 +98,6 @@ const MessagesPage = () => {
             </div>
           ))
         ) : chats.length > 0 ? (
-          // Chat list
           chats.map(chat => (
             <div 
               key={chat.id} 
@@ -147,7 +141,6 @@ const MessagesPage = () => {
             </div>
           ))
         ) : (
-          // Empty state
           <div className="flex flex-col items-center justify-center py-16 bg-white text-center px-4">
             <div className="w-20 h-20 bg-gray-100 rounded-full flex items-center justify-center mb-4">
               <MessageCircle className="h-10 w-10 text-gray-400" />
@@ -160,7 +153,6 @@ const MessagesPage = () => {
         )}
       </div>
       
-      {/* SOS Button */}
       <SOSButton />
     </div>
   );

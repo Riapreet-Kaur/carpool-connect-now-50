@@ -1,4 +1,3 @@
-
 import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
@@ -24,6 +23,7 @@ import LanguagePage from "./pages/LanguagePage";
 import HelpSupportPage from "./pages/HelpSupportPage";
 import PrivacyDataPage from "./pages/PrivacyDataPage";
 import MyRidesPage from "./pages/MyRidesPage";
+import ReviewsPage from "./pages/ReviewsPage";
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -60,6 +60,7 @@ const App = () => (
           <Route path="/language" element={<LanguagePage />} />
           <Route path="/help" element={<HelpSupportPage />} />
           <Route path="/privacy" element={<PrivacyDataPage />} />
+          <Route path="/profile/reviews" element={<ReviewsPage />} />
           <Route path="*" element={<NotFound />} />
         </Routes>
       </BrowserRouter>
