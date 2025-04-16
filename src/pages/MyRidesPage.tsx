@@ -71,29 +71,29 @@ const MyRidesPage = () => {
           id: 'ride-1',
           status: 'upcoming',
           date: new Date(Date.now() + 2 * 24 * 60 * 60 * 1000), // 2 days in future
-          origin: 'San Francisco',
-          destination: 'Los Angeles',
-          price: 45,
+          origin: 'Mumbai',
+          destination: 'Pune',
+          price: 450,
           seats: {
             total: 4,
             available: 2
           },
           car: {
-            make: 'Toyota',
-            model: 'Prius',
+            make: 'Tata',
+            model: 'Nexon',
             color: 'Blue'
           },
           passengers: [
             {
               id: 'user-1',
-              firstName: 'John',
-              lastName: 'Smith',
+              firstName: 'Priya',
+              lastName: 'Patel',
               avatar: '/lovable-uploads/8709c341-a273-4678-8345-65a0ccb7e0ec.png'
             },
             {
               id: 'user-2',
-              firstName: 'Sarah',
-              lastName: 'Johnson'
+              firstName: 'Amit',
+              lastName: 'Verma'
             }
           ]
         },
@@ -101,29 +101,29 @@ const MyRidesPage = () => {
           id: 'ride-2',
           status: 'ongoing',
           date: new Date(), // Now
-          origin: 'Los Angeles',
-          destination: 'San Diego',
-          price: 35,
+          origin: 'Bangalore',
+          destination: 'Mysore',
+          price: 350,
           seats: {
             total: 3,
             available: 1
           },
           car: {
-            make: 'Honda',
-            model: 'Civic',
+            make: 'Hyundai',
+            model: 'Creta',
             color: 'Red'
           },
           passengers: [
             {
               id: 'user-3',
-              firstName: 'Michael',
-              lastName: 'Brown',
+              firstName: 'Deepak',
+              lastName: 'Kumar',
               avatar: '/lovable-uploads/b63d7144-b3e0-4e03-a033-46a27dad4dba.png'
             },
             {
               id: 'user-4',
-              firstName: 'Emma',
-              lastName: 'Wilson'
+              firstName: 'Sneha',
+              lastName: 'Reddy'
             }
           ]
         },
@@ -131,39 +131,39 @@ const MyRidesPage = () => {
           id: 'ride-3',
           status: 'completed',
           date: new Date(Date.now() - 3 * 24 * 60 * 60 * 1000), // 3 days ago
-          origin: 'San Diego',
-          destination: 'Las Vegas',
-          price: 65,
+          origin: 'Chennai',
+          destination: 'Pondicherry',
+          price: 300,
           seats: {
             total: 4,
             available: 0
           },
           car: {
-            make: 'Tesla',
-            model: 'Model 3',
+            make: 'Mahindra',
+            model: 'XUV300',
             color: 'White'
           },
           passengers: [
             {
               id: 'user-5',
-              firstName: 'Laura',
-              lastName: 'Taylor',
+              firstName: 'Anjali',
+              lastName: 'Menon',
               avatar: '/lovable-uploads/b63d7144-b3e0-4e03-a033-46a27dad4dba.png'
             },
             {
               id: 'user-6',
-              firstName: 'David',
-              lastName: 'Brown'
+              firstName: 'Rajesh',
+              lastName: 'Iyer'
             },
             {
               id: 'user-7',
-              firstName: 'Sophia',
-              lastName: 'Martinez'
+              firstName: 'Meera',
+              lastName: 'Nair'
             },
             {
               id: 'user-8',
-              firstName: 'James',
-              lastName: 'Anderson'
+              firstName: 'Karthik',
+              lastName: 'Krishnan'
             }
           ]
         }
@@ -354,3 +354,4 @@ const MyRidesPage = () => {
 };
 
 export default MyRidesPage;
+
