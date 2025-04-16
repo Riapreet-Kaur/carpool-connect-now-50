@@ -30,7 +30,22 @@ const MyRidesPage = () => {
       return {...ride, departureDate: date, status: 'completed' as 'active'};
     });
     
-    setUpcomingRides(upcoming);
+    // Check for newly published rides from localStorage
+    const publishedRideData = localStorage.getItem('publishedRide');
+    if (publishedRideData) {
+      try {
+        const publishedRide = JSON.parse(publishedRideData);
+        
+        // Add the published ride to the upcoming rides
+        setUpcomingRides([publishedRide, ...upcoming]);
+      } catch (error) {
+        console.error('Error parsing published ride:', error);
+        setUpcomingRides(upcoming);
+      }
+    } else {
+      setUpcomingRides(upcoming);
+    }
+    
     setCompletedRides(completed);
   }, []);
   

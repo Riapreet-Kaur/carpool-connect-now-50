@@ -1,3 +1,4 @@
+
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Calendar, Clock, MapPin, Users, ArrowLeft, Car, MinusIcon, PlusIcon, IndianRupee } from 'lucide-react';
@@ -132,6 +133,37 @@ const PublishRide = () => {
 
   const handleSubmit = () => {
     setIsSubmitted(true);
+    
+    // Create a published ride object based on form data
+    const publishedRide: Ride = {
+      id: `published-${Date.now()}`,
+      driverId: "d1",
+      origin: formData.origin,
+      destination: formData.destination,
+      departureDate: new Date(formData.departureDate),
+      departureTime: formData.departureTime,
+      estimatedArrival: "", // Could calculate this in a real app
+      availableSeats: formData.seats,
+      price: parseInt(formData.price),
+      currency: "₹",
+      carModel: formData.car,
+      carColor: "White", // Default
+      status: "active",
+      createdAt: new Date(),
+      driver: {
+        id: "d1",
+        firstName: "You",
+        lastName: "",
+        email: "you@example.com",
+        verified: true,
+        createdAt: new Date(),
+        profilePicture: undefined
+      }
+    };
+    
+    // Save the published ride to localStorage
+    localStorage.setItem('publishedRide', JSON.stringify(publishedRide));
+    
     toast.success('Your ride has been published successfully!');
   };
 
@@ -484,10 +516,7 @@ const PublishRide = () => {
   return (
     <div className="min-h-screen p-6">
       <div className="flex items-center mb-6">
-        <button 
-          onClick={handleBack}
-          className="p-1 mr-2"
-        >
+        <button onClick={handleBack} className="p-1 mr-2">
           <ArrowLeft className="h-6 w-6 text-secondary" />
         </button>
         <h1 className="text-xl font-semibold text-secondary">
