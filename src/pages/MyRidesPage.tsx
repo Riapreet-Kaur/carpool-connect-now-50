@@ -1,357 +1,179 @@
 
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { ArrowLeft, Search, Car } from 'lucide-react';
-import { Avatar } from '@/components/ui/avatar';
-import { Input } from '@/components/ui/input';
-import { Badge } from '@/components/ui/badge';
-import { format } from 'date-fns';
-
-interface Ride {
-  id: string;
-  status: 'upcoming' | 'ongoing' | 'completed' | 'cancelled';
-  date: Date;
-  origin: string;
-  destination: string;
-  price: number;
-  seats: {
-    total: number;
-    available: number;
-  };
-  car?: {
-    make: string;
-    model: string;
-    color: string;
-  };
-  passengers: {
-    id: string;
-    firstName: string;
-    lastName: string;
-    avatar?: string;
-  }[];
-}
+import { ArrowLeft, Calendar, Clock, Plus } from 'lucide-react';
+import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
+import { Button } from '@/components/ui/button';
+import { Ride } from '@/types';
+import { generateMockRides } from '@/lib/utils';
 
 const MyRidesPage = () => {
   const navigate = useNavigate();
-  const [rides, setRides] = useState<Ride[]>([]);
-  const [filter, setFilter] = useState<string>('upcoming');
-  const [search, setSearch] = useState<string>('');
-  const [loading, setLoading] = useState(true);
-
+  const [upcomingRides, setUpcomingRides] = useState<Ride[]>([]);
+  const [completedRides, setCompletedRides] = useState<Ride[]>([]);
+  
   useEffect(() => {
-    // Simulate API call
-    setTimeout(() => {
-      const mockRides: Ride[] = [
-        {
-          id: 'ride-0',
-          status: 'upcoming',
-          date: new Date(Date.now() + 1 * 24 * 60 * 60 * 1000), // 1 day in future
-          origin: 'Delhi',
-          destination: 'Chandigarh',
-          price: 400,
-          seats: {
-            total: 3,
-            available: 2
-          },
-          car: {
-            make: 'Maruti',
-            model: 'Swift',
-            color: 'White'
-          },
-          passengers: [
-            {
-              id: 'user-delhi-1',
-              firstName: 'Rahul',
-              lastName: 'Sharma',
-              avatar: '/lovable-uploads/8709c341-a273-4678-8345-65a0ccb7e0ec.png'
-            }
-          ]
-        },
-        {
-          id: 'ride-1',
-          status: 'upcoming',
-          date: new Date(Date.now() + 2 * 24 * 60 * 60 * 1000), // 2 days in future
-          origin: 'Mumbai',
-          destination: 'Pune',
-          price: 450,
-          seats: {
-            total: 4,
-            available: 2
-          },
-          car: {
-            make: 'Tata',
-            model: 'Nexon',
-            color: 'Blue'
-          },
-          passengers: [
-            {
-              id: 'user-1',
-              firstName: 'Priya',
-              lastName: 'Patel',
-              avatar: '/lovable-uploads/8709c341-a273-4678-8345-65a0ccb7e0ec.png'
-            },
-            {
-              id: 'user-2',
-              firstName: 'Amit',
-              lastName: 'Verma'
-            }
-          ]
-        },
-        {
-          id: 'ride-2',
-          status: 'ongoing',
-          date: new Date(), // Now
-          origin: 'Bangalore',
-          destination: 'Mysore',
-          price: 350,
-          seats: {
-            total: 3,
-            available: 1
-          },
-          car: {
-            make: 'Hyundai',
-            model: 'Creta',
-            color: 'Red'
-          },
-          passengers: [
-            {
-              id: 'user-3',
-              firstName: 'Deepak',
-              lastName: 'Kumar',
-              avatar: '/lovable-uploads/b63d7144-b3e0-4e03-a033-46a27dad4dba.png'
-            },
-            {
-              id: 'user-4',
-              firstName: 'Sneha',
-              lastName: 'Reddy'
-            }
-          ]
-        },
-        {
-          id: 'ride-3',
-          status: 'completed',
-          date: new Date(Date.now() - 3 * 24 * 60 * 60 * 1000), // 3 days ago
-          origin: 'Chennai',
-          destination: 'Pondicherry',
-          price: 300,
-          seats: {
-            total: 4,
-            available: 0
-          },
-          car: {
-            make: 'Mahindra',
-            model: 'XUV300',
-            color: 'White'
-          },
-          passengers: [
-            {
-              id: 'user-5',
-              firstName: 'Anjali',
-              lastName: 'Menon',
-              avatar: '/lovable-uploads/b63d7144-b3e0-4e03-a033-46a27dad4dba.png'
-            },
-            {
-              id: 'user-6',
-              firstName: 'Rajesh',
-              lastName: 'Iyer'
-            },
-            {
-              id: 'user-7',
-              firstName: 'Meera',
-              lastName: 'Nair'
-            },
-            {
-              id: 'user-8',
-              firstName: 'Karthik',
-              lastName: 'Krishnan'
-            }
-          ]
-        }
-      ];
-      setRides(mockRides);
-      setLoading(false);
-    }, 1000);
+    // In a real app, these would come from an API
+    const mockRides = generateMockRides(10);
+    
+    // Set upcoming rides (future rides)
+    const upcoming = mockRides.slice(0, 3).map(ride => {
+      const date = new Date();
+      date.setDate(date.getDate() + Math.floor(Math.random() * 7) + 1);
+      return {...ride, departureDate: date, status: 'active' as 'active'};
+    });
+    
+    // Set completed rides (past rides)
+    const completed = mockRides.slice(3, 8).map(ride => {
+      const date = new Date();
+      date.setDate(date.getDate() - Math.floor(Math.random() * 14) - 1);
+      return {...ride, departureDate: date, status: 'completed' as 'active'};
+    });
+    
+    setUpcomingRides(upcoming);
+    setCompletedRides(completed);
   }, []);
-
-  const filteredRides = rides.filter(ride => {
-    if (filter !== 'all' && ride.status !== filter) return false;
-    
-    if (search) {
-      const searchTerm = search.toLowerCase();
-      return (
-        ride.origin.toLowerCase().includes(searchTerm) ||
-        ride.destination.toLowerCase().includes(searchTerm)
-      );
-    }
-    
-    return true;
-  });
-
-  const getStatusBadge = (status: string) => {
-    switch(status) {
-      case 'upcoming':
-        return <Badge variant="default" className="bg-primary">Upcoming</Badge>;
-      case 'ongoing':
-        return <Badge variant="default" className="bg-green-600">Ongoing</Badge>;
-      case 'completed':
-        return <Badge variant="outline" className="text-green-600 border-green-600">Completed</Badge>;
-      case 'cancelled':
-        return <Badge variant="outline" className="text-red-600 border-red-600">Cancelled</Badge>;
-      default:
-        return null;
-    }
+  
+  const formatDate = (date: Date) => {
+    return date.toLocaleDateString('en-IN', {
+      weekday: 'short',
+      month: 'short',
+      day: 'numeric'
+    });
   };
-
-  return (
-    <div className="min-h-screen bg-gray-50 pb-20">
-      {/* Header */}
-      <div className="bg-white p-4 border-b flex items-center">
-        <button 
-          onClick={() => navigate(-1)}
-          className="p-1"
-        >
-          <ArrowLeft className="h-6 w-6 text-secondary" />
-        </button>
-        <h1 className="text-xl font-semibold text-secondary ml-4">My Rides</h1>
-      </div>
-      
-      {/* Search and filters */}
-      <div className="p-4 bg-white">
-        <div className="relative">
-          <Search className="absolute left-3 top-2.5 h-5 w-5 text-gray-400" />
-          <Input
-            type="text"
-            placeholder="Search rides..."
-            className="pl-10"
-            value={search}
-            onChange={(e) => setSearch(e.target.value)}
-          />
+  
+  const formatTime = (time: string) => {
+    if (!time) return '';
+    
+    const [hours, minutes] = time.split(':');
+    const h = parseInt(hours, 10);
+    const m = minutes || '00';
+    const ampm = h >= 12 ? 'PM' : 'AM';
+    const hour = h % 12 || 12;
+    
+    return `${hour}:${m} ${ampm}`;
+  };
+  
+  const RideCard = ({ ride }: { ride: Ride }) => (
+    <div 
+      className="bg-white rounded-lg shadow-sm p-4 mb-4"
+      onClick={() => navigate(`/rides/${ride.id}`)}
+    >
+      <div className="flex justify-between items-start mb-3">
+        <div>
+          <div className="text-lg font-semibold text-secondary">
+            {ride.origin} → {ride.destination}
+          </div>
+          <div className="flex items-center text-gray-500 text-sm mt-1">
+            <Calendar className="h-4 w-4 mr-1" />
+            {formatDate(ride.departureDate)}
+            <span className="mx-2">•</span>
+            <Clock className="h-4 w-4 mr-1" />
+            {formatTime(ride.departureTime)}
+          </div>
         </div>
         
-        <div className="flex mt-4 space-x-3 overflow-x-auto pb-2 scrollbar-hide">
-          <button
-            onClick={() => setFilter('all')}
-            className={`px-4 py-2 rounded-full text-sm whitespace-nowrap ${filter === 'all' ? 'bg-primary text-white' : 'bg-gray-100 text-gray-700'}`}
-          >
-            All
-          </button>
-          <button
-            onClick={() => setFilter('upcoming')}
-            className={`px-4 py-2 rounded-full text-sm whitespace-nowrap ${filter === 'upcoming' ? 'bg-primary text-white' : 'bg-gray-100 text-gray-700'}`}
-          >
-            Upcoming
-          </button>
-          <button
-            onClick={() => setFilter('ongoing')}
-            className={`px-4 py-2 rounded-full text-sm whitespace-nowrap ${filter === 'ongoing' ? 'bg-primary text-white' : 'bg-gray-100 text-gray-700'}`}
-          >
-            Ongoing
-          </button>
-          <button
-            onClick={() => setFilter('completed')}
-            className={`px-4 py-2 rounded-full text-sm whitespace-nowrap ${filter === 'completed' ? 'bg-primary text-white' : 'bg-gray-100 text-gray-700'}`}
-          >
-            Completed
-          </button>
-          <button
-            onClick={() => setFilter('cancelled')}
-            className={`px-4 py-2 rounded-full text-sm whitespace-nowrap ${filter === 'cancelled' ? 'bg-primary text-white' : 'bg-gray-100 text-gray-700'}`}
-          >
-            Cancelled
-          </button>
+        <div className="text-lg font-bold text-secondary">
+          ₹{ride.price}
         </div>
       </div>
       
-      {/* Rides list */}
-      <div className="space-y-4 mt-4 px-4">
-        {loading ? (
-          // Loading skeleton
-          [...Array(3)].map((_, i) => (
-            <div key={i} className="bg-white p-4 rounded-lg shadow-sm animate-pulse">
-              <div className="flex justify-between mb-3">
-                <div className="w-32 h-5 bg-gray-200 rounded"></div>
-                <div className="w-24 h-6 bg-gray-200 rounded-full"></div>
-              </div>
-              <div className="w-full h-4 bg-gray-200 rounded mb-3"></div>
-              <div className="flex justify-between items-center">
-                <div className="flex">
-                  <div className="w-24 h-4 bg-gray-200 rounded"></div>
-                </div>
-                <div className="w-16 h-5 bg-gray-200 rounded"></div>
-              </div>
+      <div className="flex items-center">
+        <div className="w-8 h-8 bg-gray-200 rounded-full mr-2 overflow-hidden">
+          {ride.driver?.profilePicture ? (
+            <img 
+              src={ride.driver.profilePicture} 
+              alt={`${ride.driver.firstName}`} 
+              className="w-full h-full object-cover"
+            />
+          ) : (
+            <div className="h-full w-full flex items-center justify-center text-gray-500">
+              {ride.driver?.firstName?.charAt(0) || '?'}
             </div>
-          ))
-        ) : filteredRides.length > 0 ? (
-          filteredRides.map(ride => (
-            <div 
-              key={ride.id} 
-              className="bg-white p-4 rounded-lg shadow-sm"
-              onClick={() => navigate(`/rides/${ride.id}`)}
-            >
-              <div className="flex justify-between mb-2">
-                <span className="text-gray-500">
-                  {format(ride.date, 'MMM dd, yyyy')} · {format(ride.date, 'h:mm a')}
-                </span>
-                {getStatusBadge(ride.status)}
+          )}
+        </div>
+        <div className="text-sm">
+          <span className="text-secondary">{ride.driver?.firstName} {ride.driver?.lastName?.charAt(0) || ''}</span>
+          {ride.status === 'active' && (
+            <span className="ml-2 px-2 py-0.5 bg-green-100 rounded-full text-green-800 text-xs">
+              Upcoming
+            </span>
+          )}
+          {ride.status === 'completed' && (
+            <span className="ml-2 px-2 py-0.5 bg-gray-100 rounded-full text-gray-800 text-xs">
+              Completed
+            </span>
+          )}
+        </div>
+      </div>
+    </div>
+  );
+
+  return (
+    <div className="min-h-screen bg-gray-50">
+      {/* Header */}
+      <div className="bg-white p-4 border-b flex items-center justify-between">
+        <div className="flex items-center">
+          <button 
+            onClick={() => navigate(-1)}
+            className="p-1"
+          >
+            <ArrowLeft className="h-6 w-6 text-secondary" />
+          </button>
+          <h1 className="text-xl font-semibold text-secondary ml-4">My Rides</h1>
+        </div>
+        
+        <Button
+          variant="outline"
+          onClick={() => navigate('/publish')}
+          className="rounded-full"
+        >
+          <Plus className="h-4 w-4 mr-2" />
+          Publish Ride
+        </Button>
+      </div>
+      
+      {/* Tab content */}
+      <div className="p-4">
+        <Tabs defaultValue="upcoming">
+          <TabsList className="grid grid-cols-2 mb-4">
+            <TabsTrigger value="upcoming">Upcoming</TabsTrigger>
+            <TabsTrigger value="completed">Completed</TabsTrigger>
+          </TabsList>
+          
+          <TabsContent value="upcoming" className="space-y-4">
+            {upcomingRides.length > 0 ? (
+              upcomingRides.map((ride) => (
+                <RideCard key={ride.id} ride={ride} />
+              ))
+            ) : (
+              <div className="text-center py-10">
+                <p className="text-gray-500">No upcoming rides</p>
+                <Button 
+                  onClick={() => navigate('/publish')}
+                  className="mt-4"
+                >
+                  Publish a ride
+                </Button>
               </div>
-              
-              <div className="text-secondary mb-3">
-                <span className="font-semibold">{ride.origin}</span> → <span className="font-semibold">{ride.destination}</span>
+            )}
+          </TabsContent>
+          
+          <TabsContent value="completed" className="space-y-4">
+            {completedRides.length > 0 ? (
+              completedRides.map((ride) => (
+                <RideCard key={ride.id} ride={ride} />
+              ))
+            ) : (
+              <div className="text-center py-10">
+                <p className="text-gray-500">No completed rides yet</p>
               </div>
-              
-              <div className="flex justify-between items-center">
-                <div className="flex items-center">
-                  <div className="flex items-center text-sm text-gray-600">
-                    {ride.car && (
-                      <div className="flex items-center mr-4">
-                        <Car className="h-4 w-4 mr-1" />
-                        <span>{ride.car.make} {ride.car.model}</span>
-                      </div>
-                    )}
-                    <div>
-                      {ride.seats.available}/{ride.seats.total} seats available
-                    </div>
-                  </div>
-                </div>
-                
-                <span className="text-primary font-semibold">₹{ride.price}</span>
-              </div>
-              
-              {/* Show passengers */}
-              <div className="mt-3 pt-3 border-t border-gray-100">
-                <span className="text-xs text-gray-500 mb-2 block">
-                  {ride.passengers.length} passenger{ride.passengers.length !== 1 ? 's' : ''}
-                </span>
-                <div className="flex overflow-hidden">
-                  {ride.passengers.slice(0, 4).map((passenger, index) => (
-                    <Avatar key={passenger.id} className={`h-8 w-8 border-2 border-white ${index > 0 ? '-ml-2' : ''}`}>
-                      {passenger.avatar ? (
-                        <img src={passenger.avatar} alt="Passenger" className="h-full w-full object-cover" />
-                      ) : (
-                        <div className="h-full w-full bg-gray-200 flex items-center justify-center text-xs">
-                          {passenger.firstName.charAt(0)}
-                        </div>
-                      )}
-                    </Avatar>
-                  ))}
-                  {ride.passengers.length > 4 && (
-                    <div className="h-8 w-8 rounded-full bg-gray-100 -ml-2 flex items-center justify-center text-xs text-gray-600">
-                      +{ride.passengers.length - 4}
-                    </div>
-                  )}
-                </div>
-              </div>
-            </div>
-          ))
-        ) : (
-          <div className="bg-white p-6 rounded-lg text-center">
-            <p className="text-gray-500">No rides found matching your criteria.</p>
-          </div>
-        )}
+            )}
+          </TabsContent>
+        </Tabs>
       </div>
     </div>
   );
 };
 
 export default MyRidesPage;
-

@@ -1,3 +1,4 @@
+
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Calendar, Clock, MapPin, Users, ArrowLeft, Car, MinusIcon, PlusIcon, DollarSign } from 'lucide-react';
@@ -7,12 +8,19 @@ import { Textarea } from '@/components/ui/textarea';
 import { toast } from 'sonner';
 import { Ride } from '@/types';
 import { indianStates } from '@/data/indianStates';
+import { 
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 
 const initialRide: Ride = {
   id: "new-ride-1",
   driverId: "d1",
-  origin: "Mumbai",
-  destination: "Pune",
+  origin: "",
+  destination: "",
   departureDate: new Date(),
   departureTime: "09:00",
   estimatedArrival: "12:00",
@@ -29,10 +37,10 @@ const PublishRide = () => {
   const navigate = useNavigate();
   const [step, setStep] = useState(1);
   const [isSubmitted, setIsSubmitted] = useState(false);
-  const [ride] = useState<Ride>(initialRide);
+  const [ride, setRide] = useState<Ride>(initialRide);
   const [formData, setFormData] = useState({
-    origin: 'Mumbai',
-    destination: 'Pune',
+    origin: '',
+    destination: '',
     departureDate: '',
     departureTime: '',
     seats: 2,
@@ -57,6 +65,13 @@ const PublishRide = () => {
       ...formData,
       [name]: value
     });
+    
+    if (name === 'origin' || name === 'destination') {
+      setRide({
+        ...ride,
+        [name]: value
+      });
+    }
   };
 
   const incrementSeats = () => {
@@ -139,14 +154,14 @@ const PublishRide = () => {
                 <MapPin className="h-5 w-5 text-primary" />
                 <div>
                   <p className="text-sm text-gray-500">From</p>
-                  <p className="font-semibold">{ride.origin}</p>
+                  <p className="font-semibold">{formData.origin}</p>
                 </div>
               </div>
               <div className="flex items-center space-x-2">
                 <MapPin className="h-5 w-5 text-primary" />
                 <div>
                   <p className="text-sm text-gray-500">To</p>
-                  <p className="font-semibold">{ride.destination}</p>
+                  <p className="font-semibold">{formData.destination}</p>
                 </div>
               </div>
             </div>
@@ -157,11 +172,7 @@ const PublishRide = () => {
                 <div>
                   <p className="text-sm text-gray-500">Date</p>
                   <p className="font-semibold">
-                    {ride.departureDate.toLocaleDateString('en-IN', { 
-                      day: 'numeric',
-                      month: 'short',
-                      year: 'numeric'
-                    })}
+                    {formData.departureDate}
                   </p>
                 </div>
               </div>
@@ -169,7 +180,7 @@ const PublishRide = () => {
                 <Clock className="h-5 w-5 text-primary" />
                 <div>
                   <p className="text-sm text-gray-500">Time</p>
-                  <p className="font-semibold">{ride.departureTime}</p>
+                  <p className="font-semibold">{formData.departureTime}</p>
                 </div>
               </div>
             </div>
@@ -178,21 +189,21 @@ const PublishRide = () => {
               <div>
                 <p className="text-sm text-gray-500">Price per seat</p>
                 <p className="text-xl font-bold text-secondary">
-                  {ride.currency}{ride.price}
+                  ₹{formData.price}
                 </p>
               </div>
               <div className="flex items-center space-x-2">
                 <Users className="h-5 w-5 text-primary" />
                 <div>
                   <p className="text-sm text-gray-500">Available seats</p>
-                  <p className="font-semibold">{ride.availableSeats}</p>
+                  <p className="font-semibold">{formData.seats}</p>
                 </div>
               </div>
             </div>
 
             <div className="border-b pb-4">
               <p className="text-sm text-gray-500">Car details</p>
-              <p className="font-semibold">{ride.carModel} ({ride.carColor})</p>
+              <p className="font-semibold">{formData.car}</p>
             </div>
 
             <div>
@@ -234,7 +245,7 @@ const PublishRide = () => {
                   <SelectTrigger className="pl-10">
                     <SelectValue placeholder="Pick-up location" />
                   </SelectTrigger>
-                  <SelectContent>
+                  <SelectContent className="max-h-80 overflow-y-auto">
                     {indianStates.map((state) => (
                       <SelectItem key={state} value={state}>
                         {state}
@@ -256,7 +267,7 @@ const PublishRide = () => {
                   <SelectTrigger className="pl-10">
                     <SelectValue placeholder="Drop-off location" />
                   </SelectTrigger>
-                  <SelectContent>
+                  <SelectContent className="max-h-80 overflow-y-auto">
                     {indianStates.map((state) => (
                       <SelectItem key={state} value={state}>
                         {state}
@@ -359,7 +370,7 @@ const PublishRide = () => {
                 <div className="flex justify-between mb-2">
                   <span className="text-secondary">You'll receive</span>
                   <span className="font-semibold text-secondary">
-                    {formData.price ? `${(Number(formData.price) * 0.9).toFixed(2)} USD` : '-'}
+                    {formData.price ? `${(Number(formData.price) * 0.9).toFixed(2)} ₹` : '-'}
                   </span>
                 </div>
                 <p className="text-gray-500 text-sm">

@@ -1,3 +1,4 @@
+
 import React, { useState } from 'react';
 import { Button } from '@/components/ui/button';
 import { AlertTriangle, X, Phone } from 'lucide-react';
@@ -43,13 +44,13 @@ const SOSButton: React.FC = () => {
   
   const sendEmergencyAlert = () => {
     // In a real app, this would send the emergency alert to the backend
-    toast.success("Emergency services have been alerted");
+    toast.success("Emergency contacts Sakshi and Mom have been alerted");
     setIsDialogOpen(false);
     setEmergencyActivated(false);
     setCountdown(5);
   };
   
-  const callEmergencyServices = () => {
+  const callEmergencyContact = () => {
     // In a real app, this would trigger a phone call to emergency contacts
     window.location.href = "tel:+918130793440";
   };
@@ -72,7 +73,7 @@ const SOSButton: React.FC = () => {
                   <AlertTriangle className="mr-2" /> Emergency SOS
                 </DialogTitle>
                 <DialogDescription className="text-base text-gray-700">
-                  This will alert emergency services and your emergency contacts with your current location.
+                  This will alert your emergency contacts (Sakshi and Mom) with your current location.
                 </DialogDescription>
               </DialogHeader>
               
@@ -85,7 +86,7 @@ const SOSButton: React.FC = () => {
                 <div className="space-y-2">
                   <div className="font-medium">Actions that will be taken:</div>
                   <ul className="text-sm space-y-1 text-gray-700">
-                    <li>• Your location will be shared with emergency contacts</li>
+                    <li>• Your location will be shared with your emergency contacts</li>
                     <li>• Your ride will be immediately canceled</li>
                     <li>• Our support team will be alerted</li>
                     <li>• Local authorities will be notified if needed</li>
@@ -124,10 +125,10 @@ const SOSButton: React.FC = () => {
               
               <div className="flex justify-center space-x-3 mb-4">
                 <Button 
-                  onClick={callEmergencyServices}
+                  onClick={callEmergencyContact}
                   className="rounded-full bg-green-600 hover:bg-green-700 text-white px-8"
                 >
-                  <Phone className="mr-2 h-4 w-4" /> Call 911
+                  <Phone className="mr-2 h-4 w-4" /> Call Sakshi
                 </Button>
                 <Button 
                   onClick={cancelEmergency}

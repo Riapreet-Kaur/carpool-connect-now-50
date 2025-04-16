@@ -1,3 +1,4 @@
+
 import { Ride } from '@/types';
 
 // Indian drivers for the rides
@@ -144,53 +145,143 @@ export const delhiToChandigarhRides: Ride[] = [
   },
 ];
 
-// Mock recipients for chat with consistent IDs
+// Mock recipients for chat with consistent IDs and Indian names
 export const mockRecipients = [
   {
     id: 'user-1',
-    firstName: 'Rajesh',
+    firstName: 'Ankit',
     lastName: 'Sharma',
-    email: 'rajesh.sharma@example.com',
+    email: 'ankit.sharma@example.com',
     profilePicture: '/lovable-uploads/8709c341-a273-4678-8345-65a0ccb7e0ec.png',
     verified: true,
     createdAt: new Date()
   },
   {
     id: 'user-2',
-    firstName: 'Priya',
+    firstName: 'Divya',
     lastName: 'Patel',
-    email: 'priya.patel@example.com',
+    email: 'divya.patel@example.com',
     verified: true,
     createdAt: new Date()
   },
   {
     id: 'user-3',
-    firstName: 'Amit',
-    lastName: 'Kumar',
+    firstName: 'Kunal',
+    lastName: 'Verma',
     profilePicture: '/lovable-uploads/b63d7144-b3e0-4e03-a033-46a27dad4dba.png',
-    email: 'amit.kumar@example.com',
+    email: 'kunal.verma@example.com',
     verified: true,
     createdAt: new Date()
   }
 ];
 
-// Update the mock messages to use Indian cities
-export const generateMockMessages = (senderId: string, receiverId: string) => [
-  {
-    id: '1',
-    senderId,
-    receiverId,
-    content: "I'm interested in your ride from Mumbai to Pune.",
-    createdAt: new Date(Date.now() - 1000 * 60 * 30),
-    read: true
-  },
-  {
-    id: '2',
-    senderId: receiverId,
-    receiverId: senderId,
-    content: "What time do you need to reach Pune?",
-    createdAt: new Date(Date.now() - 1000 * 60 * 25),
-    read: true
-  },
-  // Add more Indian city-specific messages as needed
-];
+// Generate mock messages with Indian context
+export const generateMockMessages = (senderId: string, receiverId: string) => {
+  // Different conversations for each chat
+  if (receiverId === 'user-1') {
+    return [
+      {
+        id: '1',
+        senderId,
+        receiverId,
+        content: "Hi Ankit, I'm interested in your ride from Jaipur to Udaipur tomorrow.",
+        createdAt: new Date(Date.now() - 1000 * 60 * 30),
+        read: true
+      },
+      {
+        id: '2',
+        senderId: receiverId,
+        receiverId: senderId,
+        content: "Hello! Yes, I'll be leaving around 9 AM. How many seats do you need?",
+        createdAt: new Date(Date.now() - 1000 * 60 * 25),
+        read: true
+      },
+      {
+        id: '3',
+        senderId,
+        receiverId,
+        content: "Just one seat for me. Do you allow medium-sized luggage?",
+        createdAt: new Date(Date.now() - 1000 * 60 * 20),
+        read: true
+      },
+      {
+        id: '4',
+        senderId: receiverId,
+        receiverId: senderId,
+        content: "Yes, that's fine. I drive a Hyundai Creta, so there's plenty of space in the boot.",
+        createdAt: new Date(Date.now() - 1000 * 60 * 15),
+        read: true
+      }
+    ];
+  } else if (receiverId === 'user-2') {
+    return [
+      {
+        id: '1',
+        senderId,
+        receiverId,
+        content: "Hello Divya, do you still have 2 seats available for the Pune to Mumbai ride?",
+        createdAt: new Date(Date.now() - 1000 * 60 * 45),
+        read: true
+      },
+      {
+        id: '2',
+        senderId: receiverId,
+        receiverId: senderId,
+        content: "Hi there! Yes, I do. When are you planning to travel?",
+        createdAt: new Date(Date.now() - 1000 * 60 * 40),
+        read: true
+      },
+      {
+        id: '3',
+        senderId,
+        receiverId,
+        content: "This Friday. What time will you reach Dadar?",
+        createdAt: new Date(Date.now() - 1000 * 60 * 35),
+        read: true
+      },
+      {
+        id: '4',
+        senderId: receiverId,
+        receiverId: senderId,
+        content: "I should reach Dadar around 3 PM, traffic permitting. Will that work?",
+        createdAt: new Date(Date.now() - 1000 * 60 * 30),
+        read: true
+      }
+    ];
+  } else {
+    return [
+      {
+        id: '1',
+        senderId,
+        receiverId,
+        content: "Kunal, I saw your ride from Chandigarh to Delhi. Is it still available?",
+        createdAt: new Date(Date.now() - 1000 * 60 * 60),
+        read: true
+      },
+      {
+        id: '2',
+        senderId: receiverId,
+        receiverId: senderId,
+        content: "Yes, I have 3 seats available. When do you want to travel?",
+        createdAt: new Date(Date.now() - 1000 * 60 * 55),
+        read: true
+      },
+      {
+        id: '3',
+        senderId,
+        receiverId,
+        content: "I need to be in Delhi by tomorrow evening. Is the pickup point at Sector 17?",
+        createdAt: new Date(Date.now() - 1000 * 60 * 50),
+        read: true
+      },
+      {
+        id: '4',
+        senderId: receiverId,
+        receiverId: senderId,
+        content: "Yes, Sector 17 is perfect. We'll leave around 2 PM. I drive a white Maruti Swift.",
+        createdAt: new Date(Date.now() - 1000 * 60 * 45),
+        read: true
+      }
+    ];
+  }
+};

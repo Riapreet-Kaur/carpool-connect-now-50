@@ -6,6 +6,7 @@ import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
 import { DatePicker } from '@/components/ui/date-picker';
 import { cn } from '@/lib/utils';
+import { indianStates } from '@/data/indianStates';
 import { 
   Select,
   SelectContent,
@@ -16,8 +17,8 @@ import {
 
 const SearchRide = () => {
   const navigate = useNavigate();
-  const [origin, setOrigin] = useState('Mumbai');
-  const [destination, setDestination] = useState('Pune');
+  const [origin, setOrigin] = useState('');
+  const [destination, setDestination] = useState('');
   const [date, setDate] = useState<Date>();
   const [passengers, setPassengers] = useState<string>("1");
   
@@ -33,11 +34,6 @@ const SearchRide = () => {
     navigate(`/rides?${searchParams.toString()}`);
   };
 
-  const popularCities = [
-    'Mumbai', 'Delhi', 'Bangalore', 'Pune', 'Chennai', 
-    'Hyderabad', 'Kolkata', 'Ahmedabad', 'Jaipur', 'Surat'
-  ];
-
   return (
     <div className="bg-white shadow-md rounded-lg p-4">
       <form onSubmit={handleSearch} className="space-y-3">
@@ -45,37 +41,37 @@ const SearchRide = () => {
           <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
             <MapPin className="h-5 w-5 text-gray-400" />
           </div>
-          <Input
-            type="text"
-            placeholder="Leaving from..."
-            className="pl-10"
-            value={origin}
-            onChange={(e) => setOrigin(e.target.value)}
-            required
-            list="citiesList"
-          />
+          <Select value={origin} onValueChange={setOrigin}>
+            <SelectTrigger className="pl-10">
+              <SelectValue placeholder="Leaving from..." />
+            </SelectTrigger>
+            <SelectContent className="max-h-80 overflow-y-auto">
+              {indianStates.map((state) => (
+                <SelectItem key={state} value={state}>
+                  {state}
+                </SelectItem>
+              ))}
+            </SelectContent>
+          </Select>
         </div>
         
         <div className="relative">
           <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
             <MapPin className="h-5 w-5 text-gray-400" />
           </div>
-          <Input
-            type="text"
-            placeholder="Going to..."
-            className="pl-10"
-            value={destination}
-            onChange={(e) => setDestination(e.target.value)}
-            required
-            list="citiesList"
-          />
+          <Select value={destination} onValueChange={setDestination}>
+            <SelectTrigger className="pl-10">
+              <SelectValue placeholder="Going to..." />
+            </SelectTrigger>
+            <SelectContent className="max-h-80 overflow-y-auto">
+              {indianStates.map((state) => (
+                <SelectItem key={state} value={state}>
+                  {state}
+                </SelectItem>
+              ))}
+            </SelectContent>
+          </Select>
         </div>
-
-        <datalist id="citiesList">
-          {popularCities.map(city => (
-            <option key={city} value={city} />
-          ))}
-        </datalist>
         
         <DatePicker 
           date={date} 
