@@ -1,3 +1,4 @@
+
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { ArrowLeft, Star, MessageSquare, Shield, Clock, MapPin, Users, BadgeCheck, Calendar, Car, Luggage, ChevronDown, ChevronUp } from 'lucide-react';
@@ -58,7 +59,7 @@ const RideDetail: React.FC<RideDetailProps> = ({ ride }) => {
       
       {/* Ride details with scrollable content */}
       <ScrollArea className="flex-1 overflow-y-auto">
-        <div className="p-4">
+        <div className="p-4 pr-8">
           <div className="flex justify-between items-center mb-6">
             <div>
               <div className="text-secondary-500 text-sm">
