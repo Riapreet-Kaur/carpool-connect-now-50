@@ -1,7 +1,6 @@
-
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Calendar, Clock, MapPin, Users, ArrowLeft, Car, MinusIcon, PlusIcon, DollarSign } from 'lucide-react';
+import { Calendar, Clock, MapPin, Users, ArrowLeft, Car, MinusIcon, PlusIcon, IndianRupee } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
@@ -58,7 +57,6 @@ const PublishRide = () => {
       [name]: value
     });
     
-    // Update ride state when origin or destination changes
     if (name === 'origin' || name === 'destination') {
       setRide({
         ...ride,
@@ -242,7 +240,7 @@ const PublishRide = () => {
                   className="pl-10"
                   type="text"
                   name="origin"
-                  placeholder="Pick-up location"
+                  placeholder="Leaving from..."
                   value={formData.origin}
                   onChange={handleInputChange}
                 />
@@ -257,7 +255,7 @@ const PublishRide = () => {
                   className="pl-10"
                   type="text"
                   name="destination"
-                  placeholder="Drop-off location"
+                  placeholder="Going to..."
                   value={formData.destination}
                   onChange={handleInputChange}
                 />
@@ -341,7 +339,7 @@ const PublishRide = () => {
             <div className="space-y-5">
               {/* Price */}
               <div className="flex items-center space-x-2 p-3 bg-gray-100 rounded-full">
-                <DollarSign className="h-5 w-5 text-gray-500" />
+                <IndianRupee className="h-5 w-5 text-gray-500" />
                 <Input
                   className="border-0 bg-transparent px-2 focus:ring-0"
                   type="number"
@@ -356,7 +354,7 @@ const PublishRide = () => {
                 <div className="flex justify-between mb-2">
                   <span className="text-secondary">You'll receive</span>
                   <span className="font-semibold text-secondary">
-                    {formData.price ? `${(Number(formData.price) * 0.9).toFixed(2)} ₹` : '-'}
+                    {formData.price ? `₹${(Number(formData.price) * 0.9).toFixed(2)}` : '-'}
                   </span>
                 </div>
                 <p className="text-gray-500 text-sm">
@@ -364,7 +362,7 @@ const PublishRide = () => {
                 </p>
               </div>
               
-              {/* Preferences */}
+              {/* Luggage */}
               <div className="mt-6">
                 <h2 className="text-lg font-semibold text-secondary mb-3">Luggage size allowed</h2>
                 <div className="flex space-x-2">
@@ -395,6 +393,7 @@ const PublishRide = () => {
                 </div>
               </div>
               
+              {/* Gender preference */}
               <div className="mt-6">
                 <h2 className="text-lg font-semibold text-secondary mb-3">Gender preference</h2>
                 <div className="flex space-x-2">
