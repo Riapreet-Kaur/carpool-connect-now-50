@@ -199,13 +199,8 @@ const RideSearchPage = () => {
           </div>
         ) : showNoRides ? (
           <div className="flex flex-col items-center justify-center py-12 text-gray-500 text-center">
-            <img 
-              src="/lovable-uploads/dcfdc46b-dc19-4942-b1b9-c5435fac5470.png" 
-              alt="No rides found"
-              className="w-48 h-48 object-contain mb-4"
-            />
-            <h3 className="text-lg font-medium mb-2">No such rides available yet.</h3>
-            <p>Try searching for Delhi to Chandigarh today.</p>
+            <h3 className="text-lg font-medium mb-2">No rides found</h3>
+            <p>No rides match your search criteria</p>
             <Button 
               className="mt-6"
               onClick={() => navigate('/publish')}
@@ -230,11 +225,6 @@ const RideSearchPage = () => {
           </div>
         ) : (
           <div className="flex flex-col items-center justify-center py-12 text-gray-500 text-center">
-            <img 
-              src="/lovable-uploads/dcfdc46b-dc19-4942-b1b9-c5435fac5470.png" 
-              alt="No rides found"
-              className="w-48 h-48 object-contain mb-4"
-            />
             <h3 className="text-lg font-medium mb-2">No rides found with current filters</h3>
             <p>Try adjusting your filters or search criteria</p>
             <Button 
