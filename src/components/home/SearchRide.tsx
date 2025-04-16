@@ -14,6 +14,12 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+import {
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
+} from "@/components/ui/popover";
+import { Command, CommandInput, CommandEmpty, CommandGroup, CommandItem } from "@/components/ui/command";
 
 const SearchRide = () => {
   const navigate = useNavigate();
@@ -21,6 +27,8 @@ const SearchRide = () => {
   const [destination, setDestination] = useState('');
   const [date, setDate] = useState<Date>();
   const [passengers, setPassengers] = useState<string>("1");
+  const [openOrigin, setOpenOrigin] = useState(false);
+  const [openDestination, setOpenDestination] = useState(false);
   
   const handleSearch = (e: React.FormEvent) => {
     e.preventDefault();
@@ -37,40 +45,92 @@ const SearchRide = () => {
   return (
     <div className="bg-white shadow-md rounded-lg p-4">
       <form onSubmit={handleSearch} className="space-y-3">
+        {/* Origin field with combobox */}
         <div className="relative">
           <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
             <MapPin className="h-5 w-5 text-gray-400" />
           </div>
-          <Select value={origin} onValueChange={setOrigin}>
-            <SelectTrigger className="pl-10">
-              <SelectValue placeholder="Leaving from..." />
-            </SelectTrigger>
-            <SelectContent className="max-h-80 overflow-y-auto">
-              {indianStates.map((state) => (
-                <SelectItem key={state} value={state}>
-                  {state}
-                </SelectItem>
-              ))}
-            </SelectContent>
-          </Select>
+          <Popover open={openOrigin} onOpenChange={setOpenOrigin}>
+            <PopoverTrigger asChild>
+              <Button
+                variant="outline"
+                role="combobox"
+                aria-expanded={openOrigin}
+                className="w-full justify-between pl-10 font-normal"
+              >
+                {origin ? origin : "Leaving from..."}
+              </Button>
+            </PopoverTrigger>
+            <PopoverContent className="w-full p-0" align="start">
+              <Command>
+                <CommandInput 
+                  placeholder="Search location..." 
+                  className="h-9"
+                  value={origin}
+                  onValueChange={setOrigin}
+                />
+                <CommandEmpty>No location found.</CommandEmpty>
+                <CommandGroup className="max-h-64 overflow-y-auto">
+                  {indianStates.map((state) => (
+                    <CommandItem
+                      key={state}
+                      value={state}
+                      onSelect={(currentValue) => {
+                        setOrigin(currentValue);
+                        setOpenOrigin(false);
+                      }}
+                    >
+                      {state}
+                    </CommandItem>
+                  ))}
+                </CommandGroup>
+              </Command>
+            </PopoverContent>
+          </Popover>
         </div>
         
+        {/* Destination field with combobox */}
         <div className="relative">
           <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
             <MapPin className="h-5 w-5 text-gray-400" />
           </div>
-          <Select value={destination} onValueChange={setDestination}>
-            <SelectTrigger className="pl-10">
-              <SelectValue placeholder="Going to..." />
-            </SelectTrigger>
-            <SelectContent className="max-h-80 overflow-y-auto">
-              {indianStates.map((state) => (
-                <SelectItem key={state} value={state}>
-                  {state}
-                </SelectItem>
-              ))}
-            </SelectContent>
-          </Select>
+          <Popover open={openDestination} onOpenChange={setOpenDestination}>
+            <PopoverTrigger asChild>
+              <Button
+                variant="outline"
+                role="combobox"
+                aria-expanded={openDestination}
+                className="w-full justify-between pl-10 font-normal"
+              >
+                {destination ? destination : "Going to..."}
+              </Button>
+            </PopoverTrigger>
+            <PopoverContent className="w-full p-0" align="start">
+              <Command>
+                <CommandInput 
+                  placeholder="Search location..." 
+                  className="h-9"
+                  value={destination}
+                  onValueChange={setDestination}
+                />
+                <CommandEmpty>No location found.</CommandEmpty>
+                <CommandGroup className="max-h-64 overflow-y-auto">
+                  {indianStates.map((state) => (
+                    <CommandItem
+                      key={state}
+                      value={state}
+                      onSelect={(currentValue) => {
+                        setDestination(currentValue);
+                        setOpenDestination(false);
+                      }}
+                    >
+                      {state}
+                    </CommandItem>
+                  ))}
+                </CommandGroup>
+              </Command>
+            </PopoverContent>
+          </Popover>
         </div>
         
         <DatePicker 

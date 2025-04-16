@@ -14,6 +14,12 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+import {
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
+} from "@/components/ui/popover";
+import { Command, CommandInput, CommandEmpty, CommandGroup, CommandItem } from "@/components/ui/command";
 
 const initialRide: Ride = {
   id: "new-ride-1",
@@ -37,6 +43,8 @@ const PublishRide = () => {
   const [step, setStep] = useState(1);
   const [isSubmitted, setIsSubmitted] = useState(false);
   const [ride, setRide] = useState<Ride>(initialRide);
+  const [openOrigin, setOpenOrigin] = useState(false);
+  const [openDestination, setOpenDestination] = useState(false);
   const [formData, setFormData] = useState({
     origin: '',
     destination: '',
@@ -232,48 +240,92 @@ const PublishRide = () => {
             <h1 className="text-primary-title">Where are you driving?</h1>
             
             <div className="space-y-5">
-              {/* Origin */}
+              {/* Origin with combobox */}
               <div className="relative">
-                <div className="absolute left-3 top-3.5">
+                <div className="absolute left-3 top-3.5 z-10">
                   <div className="w-3 h-3 rounded-full bg-primary border-2 border-white"></div>
                 </div>
-                <Select
-                  value={formData.origin}
-                  onValueChange={(value) => handleSelectChange('origin', value)}
-                >
-                  <SelectTrigger className="pl-10">
-                    <SelectValue placeholder="Pick-up location" />
-                  </SelectTrigger>
-                  <SelectContent className="max-h-80 overflow-y-auto">
-                    {indianStates.map((state) => (
-                      <SelectItem key={state} value={state}>
-                        {state}
-                      </SelectItem>
-                    ))}
-                  </SelectContent>
-                </Select>
+                <Popover open={openOrigin} onOpenChange={setOpenOrigin}>
+                  <PopoverTrigger asChild>
+                    <Button
+                      variant="outline"
+                      role="combobox"
+                      aria-expanded={openOrigin}
+                      className="w-full justify-between pl-10 font-normal"
+                    >
+                      {formData.origin ? formData.origin : "Pick-up location"}
+                    </Button>
+                  </PopoverTrigger>
+                  <PopoverContent className="w-full p-0" align="start">
+                    <Command>
+                      <CommandInput 
+                        placeholder="Search location..." 
+                        className="h-9"
+                        value={formData.origin}
+                        onValueChange={(value) => handleSelectChange('origin', value)}
+                      />
+                      <CommandEmpty>No location found.</CommandEmpty>
+                      <CommandGroup className="max-h-64 overflow-y-auto">
+                        {indianStates.map((state) => (
+                          <CommandItem
+                            key={state}
+                            value={state}
+                            onSelect={(currentValue) => {
+                              handleSelectChange('origin', currentValue);
+                              setOpenOrigin(false);
+                            }}
+                          >
+                            {state}
+                          </CommandItem>
+                        ))}
+                      </CommandGroup>
+                    </Command>
+                  </PopoverContent>
+                </Popover>
               </div>
               
-              {/* Destination */}
+              {/* Destination with combobox */}
               <div className="relative">
-                <div className="absolute left-3 top-3.5">
+                <div className="absolute left-3 top-3.5 z-10">
                   <div className="w-3 h-3 rounded-full bg-primary border-2 border-white"></div>
                 </div>
-                <Select
-                  value={formData.destination}
-                  onValueChange={(value) => handleSelectChange('destination', value)}
-                >
-                  <SelectTrigger className="pl-10">
-                    <SelectValue placeholder="Drop-off location" />
-                  </SelectTrigger>
-                  <SelectContent className="max-h-80 overflow-y-auto">
-                    {indianStates.map((state) => (
-                      <SelectItem key={state} value={state}>
-                        {state}
-                      </SelectItem>
-                    ))}
-                  </SelectContent>
-                </Select>
+                <Popover open={openDestination} onOpenChange={setOpenDestination}>
+                  <PopoverTrigger asChild>
+                    <Button
+                      variant="outline"
+                      role="combobox"
+                      aria-expanded={openDestination}
+                      className="w-full justify-between pl-10 font-normal"
+                    >
+                      {formData.destination ? formData.destination : "Drop-off location"}
+                    </Button>
+                  </PopoverTrigger>
+                  <PopoverContent className="w-full p-0" align="start">
+                    <Command>
+                      <CommandInput 
+                        placeholder="Search location..." 
+                        className="h-9"
+                        value={formData.destination}
+                        onValueChange={(value) => handleSelectChange('destination', value)}
+                      />
+                      <CommandEmpty>No location found.</CommandEmpty>
+                      <CommandGroup className="max-h-64 overflow-y-auto">
+                        {indianStates.map((state) => (
+                          <CommandItem
+                            key={state}
+                            value={state}
+                            onSelect={(currentValue) => {
+                              handleSelectChange('destination', currentValue);
+                              setOpenDestination(false);
+                            }}
+                          >
+                            {state}
+                          </CommandItem>
+                        ))}
+                      </CommandGroup>
+                    </Command>
+                  </PopoverContent>
+                </Popover>
               </div>
               
               <p className="text-gray-500 text-sm">
