@@ -39,7 +39,7 @@ const MessagesPage = () => {
           recipientId: mockRecipients[1].id, // 'user-2' - Divya Patel
           recipientName: `${mockRecipients[1].firstName} ${mockRecipients[1].lastName}`,
           recipientAvatar: mockRecipients[1].profilePicture,
-          lastMessage: 'Absolutely, there's plenty of space for backpacks. See you tomorrow!',
+          lastMessage: "Absolutely, there's plenty of space for backpacks. See you tomorrow!",
           timestamp: new Date(Date.now() - 30 * 60 * 1000),
           unread: false
         },
