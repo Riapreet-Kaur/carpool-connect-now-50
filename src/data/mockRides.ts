@@ -151,6 +151,7 @@ export const mockRecipients = [
     firstName: 'Ankit',
     lastName: 'Sharma',
     email: 'ankit.sharma@example.com',
+    profilePicture: '/assets/user1.png',
     verified: true,
     createdAt: new Date()
   },
@@ -159,6 +160,7 @@ export const mockRecipients = [
     firstName: 'Divya',
     lastName: 'Patel',
     email: 'divya.patel@example.com',
+    profilePicture: '/assets/user2.png',
     verified: true,
     createdAt: new Date()
   },
@@ -167,6 +169,7 @@ export const mockRecipients = [
     firstName: 'Kunal',
     lastName: 'Verma',
     email: 'kunal.verma@example.com',
+    profilePicture: '/assets/user3.png',
     verified: true,
     createdAt: new Date()
   }

@@ -29,7 +29,7 @@ const MessagesPage = () => {
           id: 'chat-1',
           recipientId: mockRecipients[0].id, // 'user-1' - Ankit Sharma
           recipientName: `${mockRecipients[0].firstName} ${mockRecipients[0].lastName}`,
-          recipientAvatar: mockRecipients[0].profilePicture,
+          recipientAvatar: mockRecipients[0].profilePicture || undefined,
           lastMessage: "I usually stop once for breakfast at a dhaba near Gurugram.",
           timestamp: new Date(),
           unread: true
@@ -38,7 +38,7 @@ const MessagesPage = () => {
           id: 'chat-2',
           recipientId: mockRecipients[1].id, // 'user-2' - Divya Patel
           recipientName: `${mockRecipients[1].firstName} ${mockRecipients[1].lastName}`,
-          recipientAvatar: mockRecipients[1].profilePicture,
+          recipientAvatar: mockRecipients[1].profilePicture || undefined,
           lastMessage: "Absolutely, there's plenty of space for backpacks. See you tomorrow!",
           timestamp: new Date(Date.now() - 30 * 60 * 1000),
           unread: false
@@ -47,7 +47,7 @@ const MessagesPage = () => {
           id: 'chat-3',
           recipientId: mockRecipients[2].id, // 'user-3' - Kunal Kumar
           recipientName: `${mockRecipients[2].firstName} ${mockRecipients[2].lastName}`,
-          recipientAvatar: mockRecipients[2].profilePicture,
+          recipientAvatar: mockRecipients[2].profilePicture || undefined,
           lastMessage: "That would be amazing! I'll book the seat now.",
           timestamp: new Date(Date.now() - 2 * 60 * 60 * 1000),
           unread: false
