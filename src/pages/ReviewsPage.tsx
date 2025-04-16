@@ -41,6 +41,27 @@ const ReviewsPage = () => {
       rating: 5.0,
       comment: "Perfect ride! On time and very courteous.",
       date: "1 month ago"
+    },
+    {
+      id: 6,
+      name: "Vikram Singh",
+      rating: 4.7,
+      comment: "Great experience with Riapreet. Will definitely book again.",
+      date: "1 month ago"
+    },
+    {
+      id: 7,
+      name: "Neha Gupta",
+      rating: 5.0,
+      comment: "Very comfortable ride and excellent driving skills.",
+      date: "2 months ago"
+    },
+    {
+      id: 8,
+      name: "Karan Malhotra",
+      rating: 4.9,
+      comment: "Punctual, polite and professional. Highly recommended!",
+      date: "2 months ago"
     }
   ];
 

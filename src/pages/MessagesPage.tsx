@@ -1,8 +1,10 @@
+
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { ArrowLeft, MessageCircle } from 'lucide-react';
 import { Avatar } from '@/components/ui/avatar';
 import SOSButton from '@/components/emergency/SOSButton';
+import { mockRecipients } from '@/data/mockRides';
 
 interface ChatPreview {
   id: string;
@@ -21,29 +23,31 @@ const MessagesPage = () => {
 
   useEffect(() => {
     const timer = setTimeout(() => {
+      // Use the consistent mockRecipients data
       const mockChats: ChatPreview[] = [
         {
           id: 'chat-1',
-          recipientId: 'user-1',
-          recipientName: 'Rahul Sharma',
-          recipientAvatar: '/lovable-uploads/8709c341-a273-4678-8345-65a0ccb7e0ec.png',
+          recipientId: mockRecipients[0].id, // 'user-1' - Rahul Sharma
+          recipientName: `${mockRecipients[0].firstName} ${mockRecipients[0].lastName}`,
+          recipientAvatar: mockRecipients[0].profilePicture,
           lastMessage: 'See you tomorrow!',
           timestamp: new Date(),
           unread: true
         },
         {
           id: 'chat-2',
-          recipientId: 'user-2',
-          recipientName: 'Priya Patel',
+          recipientId: mockRecipients[1].id, // 'user-2' - Priya Patel
+          recipientName: `${mockRecipients[1].firstName} ${mockRecipients[1].lastName}`,
+          recipientAvatar: mockRecipients[1].profilePicture,
           lastMessage: 'Is there space for a small suitcase?',
           timestamp: new Date(Date.now() - 30 * 60 * 1000),
           unread: false
         },
         {
           id: 'chat-3',
-          recipientId: 'user-3',
-          recipientName: 'Amit Kumar',
-          recipientAvatar: '/lovable-uploads/b63d7144-b3e0-4e03-a033-46a27dad4dba.png',
+          recipientId: mockRecipients[2].id, // 'user-3' - Amit Kumar
+          recipientName: `${mockRecipients[2].firstName} ${mockRecipients[2].lastName}`,
+          recipientAvatar: mockRecipients[2].profilePicture,
           lastMessage: "Perfect! I'll be there.",
           timestamp: new Date(Date.now() - 2 * 60 * 60 * 1000),
           unread: false

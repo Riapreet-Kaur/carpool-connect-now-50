@@ -4,29 +4,17 @@ import { useParams } from 'react-router-dom';
 import ChatInterface from '@/components/chat/ChatInterface';
 import { User, Message } from '@/types';
 import { generateMockMessages, generateId } from '@/lib/utils';
+import { mockRecipients } from '@/data/mockRides';
 
 // Mock current user
 const currentUser: User = {
   id: 'current-user',
-  firstName: 'You',
-  lastName: '',
-  email: 'you@example.com',
+  firstName: 'Riapreet',
+  lastName: 'Kaur',
+  email: 'riapreet.kaur@example.com',
   verified: true,
   createdAt: new Date()
 };
-
-// Mock recipient
-const mockRecipients: User[] = [
-  {
-    id: 'user-1',
-    firstName: 'John',
-    lastName: 'Smith',
-    email: 'john.smith@example.com',
-    profilePicture: '/lovable-uploads/8709c341-a273-4678-8345-65a0ccb7e0ec.png',
-    verified: true,
-    createdAt: new Date()
-  }
-];
 
 const ChatPage = () => {
   const { id } = useParams<{ id: string }>();
@@ -35,8 +23,11 @@ const ChatPage = () => {
   
   useEffect(() => {
     if (id) {
-      // Find recipient
+      // Find recipient using the consistent ID from the mockRecipients
       const foundRecipient = mockRecipients.find(r => r.id === id) || null;
+      console.log("Looking for recipient with ID:", id);
+      console.log("Found recipient:", foundRecipient);
+      
       setRecipient(foundRecipient);
       
       // Generate mock messages

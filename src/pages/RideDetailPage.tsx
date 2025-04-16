@@ -1,3 +1,4 @@
+
 import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { Ride } from '@/types';
@@ -5,11 +6,8 @@ import { generateMockRides } from '@/lib/utils';
 import RideDetail from '@/components/rides/RideDetail';
 import SOSButton from '@/components/emergency/SOSButton';
 
-// Ensure mock rides are created with proper status types
-const mockRides = generateMockRides(10).map(ride => ({
-  ...ride,
-  status: "active" as "active" // Force the status to be the correct literal type
-}));
+// Import the mock rides we already have in RideSearchPage
+import { delhiToChandigarhRides } from '@/data/mockRides';
 
 const RideDetailPage = () => {
   const { id } = useParams<{ id: string }>();
@@ -17,9 +15,28 @@ const RideDetailPage = () => {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    // Simulate API call with a slight delay
+    // Look for the ride in our predefined Delhi to Chandigarh rides first
+    const foundInDelhiChandigarh = delhiToChandigarhRides.find(r => r.id === id);
+    
+    if (foundInDelhiChandigarh) {
+      console.log("Found ride in Delhi-Chandigarh dataset:", foundInDelhiChandigarh);
+      setRide(foundInDelhiChandigarh);
+      setLoading(false);
+      return;
+    }
+    
+    // If not found, try in the general mock rides as a fallback
     const timer = setTimeout(() => {
+      // Generate some mock rides as fallback
+      const mockRides = generateMockRides(10).map(ride => ({
+        ...ride,
+        status: "active" as "active"
+      }));
+      
       const foundRide = mockRides.find(r => r.id === id);
+      console.log("Looking for ride with id:", id);
+      console.log("Found in mock rides:", foundRide);
+      
       setRide(foundRide || null);
       setLoading(false);
     }, 500);
