@@ -30,7 +30,7 @@ const MessagesPage = () => {
           recipientId: mockRecipients[0].id, // 'user-1' - Ankit Sharma
           recipientName: `${mockRecipients[0].firstName} ${mockRecipients[0].lastName}`,
           recipientAvatar: mockRecipients[0].profilePicture,
-          lastMessage: 'I usually stop once for breakfast at a dhaba near Gurugram.',
+          lastMessage: "I usually stop once for breakfast at a dhaba near Gurugram.",
           timestamp: new Date(),
           unread: true
         },

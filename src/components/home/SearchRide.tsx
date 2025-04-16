@@ -19,7 +19,14 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from "@/components/ui/popover";
-import { Command, CommandInput, CommandEmpty, CommandGroup, CommandItem } from "@/components/ui/command";
+import {
+  Command,
+  CommandInput,
+  CommandEmpty,
+  CommandGroup,
+  CommandItem,
+  CommandList,
+} from "@/components/ui/command";
 
 const SearchRide = () => {
   const navigate = useNavigate();
@@ -29,6 +36,20 @@ const SearchRide = () => {
   const [passengers, setPassengers] = useState<string>("1");
   const [openOrigin, setOpenOrigin] = useState(false);
   const [openDestination, setOpenDestination] = useState(false);
+  const [searchOrigin, setSearchOrigin] = useState("");
+  const [searchDestination, setSearchDestination] = useState("");
+  
+  const filteredOriginLocations = searchOrigin.trim() === "" 
+    ? indianStates 
+    : indianStates.filter((state) => 
+        state.toLowerCase().includes(searchOrigin.toLowerCase())
+      );
+
+  const filteredDestinationLocations = searchDestination.trim() === "" 
+    ? indianStates 
+    : indianStates.filter((state) => 
+        state.toLowerCase().includes(searchDestination.toLowerCase())
+      );
   
   const handleSearch = (e: React.FormEvent) => {
     e.preventDefault();
@@ -65,25 +86,26 @@ const SearchRide = () => {
               <Command>
                 <CommandInput 
                   placeholder="Search location..." 
-                  className="h-9"
-                  value={origin}
-                  onValueChange={setOrigin}
+                  value={searchOrigin}
+                  onValueChange={setSearchOrigin}
                 />
-                <CommandEmpty>No location found.</CommandEmpty>
-                <CommandGroup className="max-h-64 overflow-y-auto">
-                  {indianStates.map((state) => (
-                    <CommandItem
-                      key={state}
-                      value={state}
-                      onSelect={(currentValue) => {
-                        setOrigin(currentValue);
-                        setOpenOrigin(false);
-                      }}
-                    >
-                      {state}
-                    </CommandItem>
-                  ))}
-                </CommandGroup>
+                <CommandList>
+                  <CommandEmpty>No location found.</CommandEmpty>
+                  <CommandGroup className="max-h-64 overflow-y-auto">
+                    {filteredOriginLocations.map((state) => (
+                      <CommandItem
+                        key={state}
+                        value={state}
+                        onSelect={(currentValue) => {
+                          setOrigin(currentValue);
+                          setOpenOrigin(false);
+                        }}
+                      >
+                        {state}
+                      </CommandItem>
+                    ))}
+                  </CommandGroup>
+                </CommandList>
               </Command>
             </PopoverContent>
           </Popover>
@@ -109,25 +131,26 @@ const SearchRide = () => {
               <Command>
                 <CommandInput 
                   placeholder="Search location..." 
-                  className="h-9"
-                  value={destination}
-                  onValueChange={setDestination}
+                  value={searchDestination}
+                  onValueChange={setSearchDestination}
                 />
-                <CommandEmpty>No location found.</CommandEmpty>
-                <CommandGroup className="max-h-64 overflow-y-auto">
-                  {indianStates.map((state) => (
-                    <CommandItem
-                      key={state}
-                      value={state}
-                      onSelect={(currentValue) => {
-                        setDestination(currentValue);
-                        setOpenDestination(false);
-                      }}
-                    >
-                      {state}
-                    </CommandItem>
-                  ))}
-                </CommandGroup>
+                <CommandList>
+                  <CommandEmpty>No location found.</CommandEmpty>
+                  <CommandGroup className="max-h-64 overflow-y-auto">
+                    {filteredDestinationLocations.map((state) => (
+                      <CommandItem
+                        key={state}
+                        value={state}
+                        onSelect={(currentValue) => {
+                          setDestination(currentValue);
+                          setOpenDestination(false);
+                        }}
+                      >
+                        {state}
+                      </CommandItem>
+                    ))}
+                  </CommandGroup>
+                </CommandList>
               </Command>
             </PopoverContent>
           </Popover>
