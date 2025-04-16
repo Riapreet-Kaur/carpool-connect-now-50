@@ -1,5 +1,4 @@
-
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { ArrowLeft, Settings, Star, Box, Shield, IdCard } from 'lucide-react';
 import ProfileHeader from '@/components/profile/ProfileHeader';
@@ -22,7 +21,33 @@ const mockUser: User = {
 
 const ProfilePage = () => {
   const navigate = useNavigate();
-  const [user] = useState<User>(mockUser);
+  const [user, setUser] = useState<User>(mockUser);
+
+  useEffect(() => {
+    // Check if there's updated profile data in localStorage
+    const updatedProfile = localStorage.getItem('userProfile');
+    const updatedPicture = localStorage.getItem('userProfilePicture');
+    
+    if (updatedProfile) {
+      const parsedProfile = JSON.parse(updatedProfile);
+      setUser(prev => ({ ...prev, ...parsedProfile }));
+      
+      // Clear the localStorage after 5 seconds
+      setTimeout(() => {
+        localStorage.removeItem('userProfile');
+        setUser(mockUser);
+      }, 5000);
+    }
+
+    if (updatedPicture) {
+      setUser(prev => ({ ...prev, profilePicture: updatedPicture }));
+      
+      // Clear the picture from localStorage after 5 seconds
+      setTimeout(() => {
+        localStorage.removeItem('userProfilePicture');
+      }, 5000);
+    }
+  }, []);
 
   return (
     <div className="min-h-screen bg-gray-50 pb-24">
