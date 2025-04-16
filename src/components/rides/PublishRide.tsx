@@ -6,6 +6,7 @@ import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
 import { toast } from 'sonner';
 import { Ride } from '@/types';
+import { indianStates } from '@/data/indianStates';
 
 const initialRide: Ride = {
   id: "new-ride-1",
@@ -226,14 +227,21 @@ const PublishRide = () => {
                 <div className="absolute left-3 top-3.5">
                   <div className="w-3 h-3 rounded-full bg-primary border-2 border-white"></div>
                 </div>
-                <Input
-                  className="pl-10 input-base"
-                  type="text"
-                  name="origin"
-                  placeholder="Pick-up location"
+                <Select
                   value={formData.origin}
-                  onChange={handleInputChange}
-                />
+                  onValueChange={(value) => handleSelectChange('origin', value)}
+                >
+                  <SelectTrigger className="pl-10">
+                    <SelectValue placeholder="Pick-up location" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    {indianStates.map((state) => (
+                      <SelectItem key={state} value={state}>
+                        {state}
+                      </SelectItem>
+                    ))}
+                  </SelectContent>
+                </Select>
               </div>
               
               {/* Destination */}
@@ -241,18 +249,25 @@ const PublishRide = () => {
                 <div className="absolute left-3 top-3.5">
                   <div className="w-3 h-3 rounded-full bg-primary border-2 border-white"></div>
                 </div>
-                <Input
-                  className="pl-10 input-base"
-                  type="text"
-                  name="destination"
-                  placeholder="Drop-off location"
+                <Select
                   value={formData.destination}
-                  onChange={handleInputChange}
-                />
+                  onValueChange={(value) => handleSelectChange('destination', value)}
+                >
+                  <SelectTrigger className="pl-10">
+                    <SelectValue placeholder="Drop-off location" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    {indianStates.map((state) => (
+                      <SelectItem key={state} value={state}>
+                        {state}
+                      </SelectItem>
+                    ))}
+                  </SelectContent>
+                </Select>
               </div>
               
               <p className="text-gray-500 text-sm">
-                Enter precise addresses so passengers know exactly where to meet you
+                Enter precise locations so passengers know exactly where to meet you
               </p>
             </div>
           </div>

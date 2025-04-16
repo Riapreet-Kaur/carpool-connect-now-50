@@ -1,4 +1,3 @@
-
 import React, { useState } from 'react';
 import { Button } from '@/components/ui/button';
 import { AlertTriangle, X, Phone } from 'lucide-react';
@@ -51,8 +50,8 @@ const SOSButton: React.FC = () => {
   };
   
   const callEmergencyServices = () => {
-    // In a real app, this would trigger a phone call
-    window.location.href = "tel:911";
+    // In a real app, this would trigger a phone call to emergency contacts
+    window.location.href = "tel:+918130793440";
   };
 
   return (

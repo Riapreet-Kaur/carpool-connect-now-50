@@ -1,4 +1,3 @@
-
 import { Ride } from '@/types';
 
 // Indian drivers for the rides
@@ -149,9 +148,9 @@ export const delhiToChandigarhRides: Ride[] = [
 export const mockRecipients = [
   {
     id: 'user-1',
-    firstName: 'Rahul',
+    firstName: 'Rajesh',
     lastName: 'Sharma',
-    email: 'rahul.sharma@example.com',
+    email: 'rajesh.sharma@example.com',
     profilePicture: '/lovable-uploads/8709c341-a273-4678-8345-65a0ccb7e0ec.png',
     verified: true,
     createdAt: new Date()
@@ -173,4 +172,25 @@ export const mockRecipients = [
     verified: true,
     createdAt: new Date()
   }
+];
+
+// Update the mock messages to use Indian cities
+export const generateMockMessages = (senderId: string, receiverId: string) => [
+  {
+    id: '1',
+    senderId,
+    receiverId,
+    content: "I'm interested in your ride from Mumbai to Pune.",
+    createdAt: new Date(Date.now() - 1000 * 60 * 30),
+    read: true
+  },
+  {
+    id: '2',
+    senderId: receiverId,
+    receiverId: senderId,
+    content: "What time do you need to reach Pune?",
+    createdAt: new Date(Date.now() - 1000 * 60 * 25),
+    read: true
+  },
+  // Add more Indian city-specific messages as needed
 ];

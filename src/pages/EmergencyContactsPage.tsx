@@ -1,4 +1,3 @@
-
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { ArrowLeft, Plus, Trash2, Phone } from 'lucide-react';
@@ -16,8 +15,8 @@ interface EmergencyContact {
 const EmergencyContactsPage = () => {
   const navigate = useNavigate();
   const [contacts, setContacts] = useState<EmergencyContact[]>([
-    { id: '1', name: 'Jane Smith', phone: '+1 (234) 567-8901' },
-    { id: '2', name: 'Robert Johnson', phone: '+1 (345) 678-9012' }
+    { id: '1', name: 'Sakshi', phone: '+91 8130793440' },
+    { id: '2', name: 'Mom', phone: '+91 9872014069' }
   ]);
   const [newContact, setNewContact] = useState({ name: '', phone: '' });
   const [isAdding, setIsAdding] = useState(false);

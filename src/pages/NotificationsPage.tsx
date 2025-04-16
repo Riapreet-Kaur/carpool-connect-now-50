@@ -17,21 +17,21 @@ const NotificationsPage = () => {
     {
       id: '1',
       title: 'New ride request',
-      message: 'John has requested to join your ride to Boston',
+      message: 'Rajesh has requested to join your ride to Bangalore',
       timestamp: new Date(Date.now() - 1000 * 60 * 30), // 30 minutes ago
       read: false
     },
     {
       id: '2',
       title: 'Ride confirmed',
-      message: 'Your ride with Sarah to New York has been confirmed',
+      message: 'Your ride with Priya to Mumbai has been confirmed',
       timestamp: new Date(Date.now() - 1000 * 60 * 60 * 3), // 3 hours ago
       read: false
     },
     {
       id: '3',
       title: 'Rate your experience',
-      message: 'How was your ride with Michael? Please leave a rating',
+      message: 'How was your ride with Amit? Please leave a rating',
       timestamp: new Date(Date.now() - 1000 * 60 * 60 * 24), // 1 day ago
       read: true
     }

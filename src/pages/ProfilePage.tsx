@@ -1,4 +1,3 @@
-
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { ArrowLeft, Settings, Star, Box, Shield, IdCard } from 'lucide-react';
@@ -102,31 +101,30 @@ const ProfilePage = () => {
           </Button>
         </div>
         
-        {/* Sample reviews */}
         <div className="space-y-4">
           <div className="p-4 bg-gray-50 rounded-lg">
             <div className="flex justify-between mb-2">
-              <div className="font-medium">Sarah M.</div>
+              <div className="font-medium">Ananya Reddy</div>
               <div className="flex items-center">
                 <Star className="h-4 w-4 text-yellow-400 fill-current mr-1" />
                 <span>5.0</span>
               </div>
             </div>
             <p className="text-gray-600 text-sm">
-              Great driver! Very punctual and the car was clean. Would ride with John again.
+              Great driver! Very punctual and the car was clean. Would ride with Riapreet again.
             </p>
           </div>
           
           <div className="p-4 bg-gray-50 rounded-lg">
             <div className="flex justify-between mb-2">
-              <div className="font-medium">David L.</div>
+              <div className="font-medium">Arjun Malhotra</div>
               <div className="flex items-center">
                 <Star className="h-4 w-4 text-yellow-400 fill-current mr-1" />
                 <span>4.8</span>
               </div>
             </div>
             <p className="text-gray-600 text-sm">
-              Smooth ride and great conversation. John is a reliable driver.
+              Smooth ride and great conversation. Riapreet is a reliable driver.
             </p>
           </div>
         </div>
