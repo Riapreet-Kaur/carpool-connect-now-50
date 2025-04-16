@@ -19,7 +19,7 @@ const AuthForm: React.FC<AuthFormProps> = ({ type }) => {
     email: '',
     password: '',
     dateOfBirth: '',
-    phoneNumber: '',
+    phoneNumber: '+91',
     gender: ''
   });
 
@@ -256,7 +256,7 @@ const AuthForm: React.FC<AuthFormProps> = ({ type }) => {
                 className="border-0 bg-transparent px-4 py-3 flex-1 focus:outline-none"
                 type="tel"
                 name="phoneNumber"
-                placeholder="Mobile phone"
+                placeholder="Enter your mobile number"
                 value={formData.phoneNumber}
                 onChange={handleInputChange}
               />

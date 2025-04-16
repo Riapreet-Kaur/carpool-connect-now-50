@@ -10,8 +10,8 @@ import { Ride } from '@/types';
 const initialRide: Ride = {
   id: "new-ride-1",
   driverId: "d1",
-  origin: "Delhi",
-  destination: "Chandigarh",
+  origin: "Mumbai",
+  destination: "Pune",
   departureDate: new Date(),
   departureTime: "09:00",
   estimatedArrival: "12:00",
@@ -30,8 +30,8 @@ const PublishRide = () => {
   const [isSubmitted, setIsSubmitted] = useState(false);
   const [ride] = useState<Ride>(initialRide);
   const [formData, setFormData] = useState({
-    origin: 'Delhi',
-    destination: 'Chandigarh',
+    origin: 'Mumbai',
+    destination: 'Pune',
     departureDate: '',
     departureTime: '',
     seats: 2,

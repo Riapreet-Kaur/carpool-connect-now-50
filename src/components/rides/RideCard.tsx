@@ -81,6 +81,11 @@ const RideCard: React.FC<RideCardProps> = ({ ride, onClick }) => {
                 {ride.driver.gender === 'female' ? 'Female driver' : 'Male driver'}
               </span>
             )}
+            {ride.driver?.gender && (
+              <span className="ml-2 text-xs px-2 py-0.5 bg-gray-100 rounded-full">
+                {ride.driver.gender === 'female' ? 'Female driver' : 'Male driver'}
+              </span>
+            )}
           </div>
         </div>
         

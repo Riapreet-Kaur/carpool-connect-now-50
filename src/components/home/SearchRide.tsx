@@ -16,8 +16,8 @@ import {
 
 const SearchRide = () => {
   const navigate = useNavigate();
-  const [origin, setOrigin] = useState('');
-  const [destination, setDestination] = useState('');
+  const [origin, setOrigin] = useState('Mumbai');
+  const [destination, setDestination] = useState('Pune');
   const [date, setDate] = useState<Date>();
   const [passengers, setPassengers] = useState<string>("1");
   
@@ -33,6 +33,11 @@ const SearchRide = () => {
     navigate(`/rides?${searchParams.toString()}`);
   };
 
+  const popularCities = [
+    'Mumbai', 'Delhi', 'Bangalore', 'Pune', 'Chennai', 
+    'Hyderabad', 'Kolkata', 'Ahmedabad', 'Jaipur', 'Surat'
+  ];
+
   return (
     <div className="bg-white shadow-md rounded-lg p-4">
       <form onSubmit={handleSearch} className="space-y-3">
@@ -47,6 +52,7 @@ const SearchRide = () => {
             value={origin}
             onChange={(e) => setOrigin(e.target.value)}
             required
+            list="citiesList"
           />
         </div>
         
@@ -61,8 +67,15 @@ const SearchRide = () => {
             value={destination}
             onChange={(e) => setDestination(e.target.value)}
             required
+            list="citiesList"
           />
         </div>
+
+        <datalist id="citiesList">
+          {popularCities.map(city => (
+            <option key={city} value={city} />
+          ))}
+        </datalist>
         
         <DatePicker 
           date={date} 
