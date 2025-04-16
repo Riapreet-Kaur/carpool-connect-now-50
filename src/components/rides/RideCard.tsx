@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { Star, ZapIcon } from 'lucide-react';
 import { Ride } from '@/types';
@@ -76,11 +75,6 @@ const RideCard: React.FC<RideCardProps> = ({ ride, onClick }) => {
           <div className="flex items-center text-gray-500">
             <Star className="h-4 w-4 text-yellow-400 mr-1" fill="currentColor" />
             <span>{ride.driver?.rating || 4.8}</span>
-            {ride.driver?.gender && (
-              <span className="ml-2 text-xs px-2 py-0.5 bg-gray-100 rounded-full">
-                {ride.driver.gender === 'female' ? 'Female driver' : 'Male driver'}
-              </span>
-            )}
             {ride.driver?.gender && (
               <span className="ml-2 text-xs px-2 py-0.5 bg-gray-100 rounded-full">
                 {ride.driver.gender === 'female' ? 'Female driver' : 'Male driver'}
