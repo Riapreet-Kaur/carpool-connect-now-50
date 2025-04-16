@@ -22,7 +22,6 @@ const indianDrivers = [
     createdAt: new Date(),
     rating: 4.9,
     gender: "female",
-    profilePicture: "/lovable-uploads/1cebc420-97f9-4f39-af90-5f342327a793.png"
   },
   {
     id: "d3",
@@ -152,7 +151,6 @@ export const mockRecipients = [
     firstName: 'Ankit',
     lastName: 'Sharma',
     email: 'ankit.sharma@example.com',
-    profilePicture: '/lovable-uploads/8709c341-a273-4678-8345-65a0ccb7e0ec.png',
     verified: true,
     createdAt: new Date()
   },
@@ -168,7 +166,6 @@ export const mockRecipients = [
     id: 'user-3',
     firstName: 'Kunal',
     lastName: 'Verma',
-    profilePicture: '/lovable-uploads/b63d7144-b3e0-4e03-a033-46a27dad4dba.png',
     email: 'kunal.verma@example.com',
     verified: true,
     createdAt: new Date()

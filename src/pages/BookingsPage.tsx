@@ -1,3 +1,4 @@
+
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { ArrowLeft, Search } from 'lucide-react';
@@ -46,7 +47,6 @@ const BookingsPage = () => {
             id: 'driver-1',
             firstName: 'Rajesh',
             lastName: 'Kumar',
-            avatar: '/lovable-uploads/8709c341-a273-4678-8345-65a0ccb7e0ec.png',
             rating: 4.8
           },
           price: 349
@@ -77,7 +77,6 @@ const BookingsPage = () => {
             id: 'driver-3',
             firstName: 'Amit',
             lastName: 'Patel',
-            avatar: '/lovable-uploads/b63d7144-b3e0-4e03-a033-46a27dad4dba.png',
             rating: 4.6
           },
           price: 249
@@ -181,51 +180,57 @@ const BookingsPage = () => {
               <div className="flex justify-between items-center">
                 <div className="flex items-center">
                   <div className="w-10 h-10 rounded-full bg-gray-200 mr-3"></div>
-                  <div className="w-24 h-4 bg-gray-200 rounded"></div>
+                  <div className="w-20 h-4 bg-gray-200 rounded"></div>
                 </div>
                 <div className="w-16 h-5 bg-gray-200 rounded"></div>
               </div>
             </div>
           ))
         ) : filteredBookings.length > 0 ? (
-          filteredBookings.map(booking => (
+          filteredBookings.map((booking) => (
             <div 
               key={booking.id} 
               className="bg-white p-4 rounded-lg shadow-sm"
               onClick={() => navigate(`/rides/${booking.rideId}`)}
             >
               <div className="flex justify-between mb-2">
-                <span className="text-gray-500">
-                  {format(booking.date, 'MMM dd, yyyy')} · {format(booking.date, 'h:mm a')}
-                </span>
+                <div className="text-gray-500">
+                  {booking.date ? format(booking.date, 'EEE, MMM d') : 'Loading date...'}
+                </div>
                 {getStatusBadge(booking.status)}
               </div>
               
-              <div className="text-secondary mb-3">
-                <span className="font-semibold">{booking.origin}</span> → <span className="font-semibold">{booking.destination}</span>
+              <div className="font-semibold text-secondary text-lg mb-3">
+                {booking.origin} → {booking.destination}
               </div>
               
               <div className="flex justify-between items-center">
                 <div className="flex items-center">
                   <Avatar className="h-10 w-10 mr-3">
-                    {booking.driver.avatar ? (
-                      <img src={booking.driver.avatar} alt="Driver" className="h-full w-full object-cover" />
-                    ) : (
-                      <div className="h-full w-full bg-gray-200 flex items-center justify-center">
-                        {booking.driver.firstName.charAt(0)}
-                      </div>
-                    )}
+                    <div className="h-full w-full flex items-center justify-center text-gray-500 bg-gray-200">
+                      {booking.driver.firstName.charAt(0)}
+                    </div>
                   </Avatar>
-                  <span className="text-secondary">{booking.driver.firstName} {booking.driver.lastName}</span>
+                  <div className="text-secondary">
+                    {booking.driver.firstName} {booking.driver.lastName}
+                  </div>
                 </div>
                 
-                <span className="text-primary font-semibold">₹{booking.price}</span>
+                <div className="font-bold text-secondary">
+                  ₹{booking.price}
+                </div>
               </div>
             </div>
           ))
         ) : (
           <div className="bg-white p-6 rounded-lg text-center">
-            <p className="text-gray-500">No bookings found matching your criteria.</p>
+            <p className="text-gray-500">No bookings found</p>
+            <button 
+              className="mt-4 text-primary font-semibold"
+              onClick={() => navigate('/rides')}
+            >
+              Find a ride
+            </button>
           </div>
         )}
       </div>
